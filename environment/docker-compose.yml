@@ -1,0 +1,65 @@
+version: '3'
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
+
+services:
+  workspace:
+    image: web-php:latest
+    build:
+      context: ./workspace
+    container_name: web-php
+    working_dir: /web
+    volumes:
+    - ../web:/web
+    tty: true
+    networks:
+      - frontend
+      - backend
+
+  nginx:
+    image: web-nginx-php:latest
+    build:
+      context: ./nginx
+    container_name: web-nginx-php
+    working_dir: /web
+    depends_on:
+      - workspace
+    ports:
+    - 80:80
+    - 443:443
+    networks:
+      - frontend
+      - backend
+
+  mysql:
+    image: web-mysql:latest
+    build:
+      context: ./mysql
+    container_name: web-mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+    volumes:
+    - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    - ./mysql/data:/var/lib/mysql
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: web-mysql-admin:lastest
+    build:
+      context: ./phpmyadmin
+    container_name: web-mysql-admin
+    restart: always
+    depends_on:
+      - mysql
+    environment:
+      - PMA_HOST=web-mysql
+      - PMA_ABSOLUTE_URI=http://admin.tinnyapi.local/
+    networks:
+      - frontend
+      - backend
