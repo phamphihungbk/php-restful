@@ -7,39 +7,41 @@ networks:
     driver: bridge
 
 services:
-  workspace:
-    image: web-php:latest
+  php-fpm:
+    image: api-php-fpm
     build:
-      context: ./workspace
-    container_name: web-php
+      context: ./php-fpm
+    container_name: api-php
     working_dir: /web
     volumes:
     - ../web:/web
+    - ../.env:/web/.env
     tty: true
     networks:
       - frontend
       - backend
 
   nginx:
-    image: web-nginx-php:latest
+    image: api-nginx
     build:
       context: ./nginx
-    container_name: web-nginx-php
+    container_name: api-nginx
     working_dir: /web
+    volumes_from:
+      - php-fpm
     depends_on:
-      - workspace
+      - php-fpm
     ports:
     - 80:80
     - 443:443
     networks:
       - frontend
-      - backend
 
   mysql:
-    image: web-mysql:latest
+    image: api-mysql
     build:
       context: ./mysql
-    container_name: web-mysql
+    container_name: api-mysql
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=secret
@@ -50,16 +52,18 @@ services:
       - backend
 
   phpmyadmin:
-    image: web-mysql-admin:lastest
+    image: api-mysql-admin
     build:
       context: ./phpmyadmin
-    container_name: web-mysql-admin
+    container_name: api-mysql-admin
     restart: always
     depends_on:
       - mysql
     environment:
-      - PMA_HOST=web-mysql
-      - PMA_ABSOLUTE_URI=http://admin.tinnyapi.local/
+      - PMA_HOST=api-mysql
+      - PMA_ABSOLUTE_URI="${PHP_MY_ADMIN_DOMAIN}"
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
     networks:
       - frontend
       - backend

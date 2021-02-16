@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use TinnyApi\User\Model\UserModel;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        UserModel::factory()->count(5)->create();
     }
 }

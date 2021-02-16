@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - '7.3'
+
+install:
+  - composer install -d web
+
+script:
+  - composer psr-check -d web
+  - composer coverage -d web
+
+branches:
+  except:
+    - master
+
+cache:
+  directories:
+    - $HOME/.composer/cache

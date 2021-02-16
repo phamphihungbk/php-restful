@@ -113,6 +113,7 @@
       <path value="$PROJECT_DIR$/web/vendor/hamcrest/hamcrest-php" />
       <path value="$PROJECT_DIR$/web/vendor/theseer/tokenizer" />
       <path value="$PROJECT_DIR$/web/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/web/vendor/squizlabs/php_codesniffer" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.3" />
