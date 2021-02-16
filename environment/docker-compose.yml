@@ -7,18 +7,17 @@ networks:
     driver: bridge
 
 services:
-  workspace:
-    image: web-php:latest
+  php-fpm:
+    image: php-fpm:latest
     build:
-      context: ./workspace
-    container_name: web-php
+      context: ./php-fpm
+    container_name: web-php-fpm
     working_dir: /web
     volumes:
     - ../web:/web
     tty: true
     networks:
       - frontend
-      - backend
 
   nginx:
     image: web-nginx-php:latest
@@ -27,7 +26,7 @@ services:
     container_name: web-nginx-php
     working_dir: /web
     depends_on:
-      - workspace
+      - php-fpm
     ports:
     - 80:80
     - 443:443
@@ -46,6 +45,7 @@ services:
     volumes:
     - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     - ./mysql/data:/var/lib/mysql
+    - ./mysql/config/my.cnf:/etc/mysql/my.cnf
     networks:
       - backend
 
