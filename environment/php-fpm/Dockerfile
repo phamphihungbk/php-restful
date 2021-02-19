@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libfreetype6-dev \
     locales \
-    zip \
+    libzip-dev \
     jpegoptim optipng pngquant gifsicle \
     vim \
     unzip \

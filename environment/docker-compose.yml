@@ -8,10 +8,10 @@ networks:
 
 services:
   php-fpm:
-    image: php-fpm:latest
+    image: api-php-fpm:latest
     build:
       context: ./php-fpm
-    container_name: web-php-fpm
+    container_name: api-php
     working_dir: /web
     volumes:
     - ../web:/web
@@ -20,11 +20,13 @@ services:
       - frontend
 
   nginx:
-    image: web-nginx-php:latest
+    image: api-nginx:latest
     build:
       context: ./nginx
-    container_name: web-nginx-php
+    container_name: api-nginx
     working_dir: /web
+    volumes:
+      - ../web:/web
     depends_on:
       - php-fpm
     ports:
@@ -35,30 +37,29 @@ services:
       - backend
 
   mysql:
-    image: web-mysql:latest
+    image: api-mysql:latest
     build:
       context: ./mysql
-    container_name: web-mysql
+    container_name: api-mysql
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=secret
     volumes:
     - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     - ./mysql/data:/var/lib/mysql
-    - ./mysql/config/my.cnf:/etc/mysql/my.cnf
     networks:
       - backend
 
   phpmyadmin:
-    image: web-mysql-admin:lastest
+    image: api-mysql-admin:lastest
     build:
       context: ./phpmyadmin
-    container_name: web-mysql-admin
+    container_name: api-mysql-admin
     restart: always
     depends_on:
       - mysql
     environment:
-      - PMA_HOST=web-mysql
+      - PMA_HOST=api-mysql
       - PMA_ABSOLUTE_URI=http://admin.tinnyapi.local/
     networks:
       - frontend
