@@ -16,8 +16,9 @@
 #     mysql -u root -p < /docker-entrypoint-initdb.d/createdb.sql
 #
 
-CREATE USER IF NOT EXISTS 'api-user' IDENTIFIED BY 'api-password';
 CREATE DATABASE IF NOT EXISTS `tinny-db` COLLATE 'utf8_general_ci';
+CREATE USER IF NOT EXISTS 'api-user' IDENTIFIED BY 'api-password';
+ALTER USER 'api-user'@'%' IDENTIFIED WITH mysql_native_password BY 'api-password';
 GRANT ALL PRIVILEGES ON `tinny-db`.* TO 'api-user'@'%';
 
-FLUSH PRIVILEGES ;
+FLUSH PRIVILEGES;

@@ -61,6 +61,8 @@ services:
     environment:
       - PMA_HOST=api-mysql
       - PMA_ABSOLUTE_URI=http://admin.tinnyapi.local/
+      - PMA_USER=root
+      - PMA_PASSWORD=secret
     networks:
       - frontend
       - backend
