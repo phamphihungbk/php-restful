@@ -18,6 +18,7 @@ services:
     tty: true
     networks:
       - frontend
+      - backend
 
   nginx:
     image: api-nginx:latest
@@ -34,7 +35,6 @@ services:
     - 443:443
     networks:
       - frontend
-      - backend
 
   mysql:
     image: api-mysql:latest

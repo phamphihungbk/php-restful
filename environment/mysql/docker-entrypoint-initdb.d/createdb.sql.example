@@ -16,17 +16,8 @@
 #     mysql -u root -p < /docker-entrypoint-initdb.d/createdb.sql
 #
 
-#CREATE DATABASE IF NOT EXISTS `dev_db_1` COLLATE 'utf8_general_ci' ;
-#GRANT ALL ON `dev_db_1`.* TO 'default'@'%' ;
-
-#CREATE DATABASE IF NOT EXISTS `dev_db_2` COLLATE 'utf8_general_ci' ;
-#GRANT ALL ON `dev_db_2`.* TO 'default'@'%' ;
-
-#CREATE DATABASE IF NOT EXISTS `dev_db_3` COLLATE 'utf8_general_ci' ;
-#GRANT ALL ON `dev_db_3`.* TO 'default'@'%' ;
-
-#CREATE USER 'testing'@'localhost' IDENTIFIED BY 'testing';
-CREATE DATABASE IF NOT EXISTS `digital` ;
-GRANT ALL ON `tinny-api`.* TO 'root'@'%' ;
+CREATE USER IF NOT EXISTS 'api-user' IDENTIFIED BY 'api-password';
+CREATE DATABASE IF NOT EXISTS `tinny-db` COLLATE 'utf8_general_ci';
+GRANT ALL PRIVILEGES ON `tinny-db`.* TO 'api-user'@'%';
 
 FLUSH PRIVILEGES ;
