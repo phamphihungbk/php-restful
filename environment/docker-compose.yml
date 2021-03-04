@@ -8,26 +8,27 @@ networks:
 
 services:
   php-fpm:
-    image: api-php-fpm:latest
+    image: api-php-fpm
     build:
       context: ./php-fpm
     container_name: api-php
     working_dir: /web
     volumes:
     - ../web:/web
+    - ../.env:/web/.env
     tty: true
     networks:
       - frontend
       - backend
 
   nginx:
-    image: api-nginx:latest
+    image: api-nginx
     build:
       context: ./nginx
     container_name: api-nginx
     working_dir: /web
-    volumes:
-      - ../web:/web
+    volumes_from:
+      - php-fpm
     depends_on:
       - php-fpm
     ports:
@@ -37,7 +38,7 @@ services:
       - frontend
 
   mysql:
-    image: api-mysql:latest
+    image: api-mysql
     build:
       context: ./mysql
     container_name: api-mysql
@@ -51,7 +52,7 @@ services:
       - backend
 
   phpmyadmin:
-    image: api-mysql-admin:lastest
+    image: api-mysql-admin
     build:
       context: ./phpmyadmin
     container_name: api-mysql-admin
@@ -60,7 +61,7 @@ services:
       - mysql
     environment:
       - PMA_HOST=api-mysql
-      - PMA_ABSOLUTE_URI=http://admin.tinnyapi.local/
+      - PMA_ABSOLUTE_URI="${PHP_MY_ADMIN_DOMAIN}"
       - PMA_USER=root
       - PMA_PASSWORD=secret
     networks:
