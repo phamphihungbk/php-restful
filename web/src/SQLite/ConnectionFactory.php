@@ -1,9 +1,9 @@
 <?php
 
-namespace TinnyApi\Mysql;
+namespace TinnyApi\SQLite;
 
 use Illuminate\Database\DatabaseManager;
-use Illuminate\Database\MySqlConnection;
+use Illuminate\Database\SQLiteConnection;
 use TinnyApi\Contracts\DatabaseConnectionFactory;
 
 class ConnectionFactory implements DatabaseConnectionFactory
@@ -19,10 +19,10 @@ class ConnectionFactory implements DatabaseConnectionFactory
     }
 
     /**
-     * @return MySqlConnection
+     * @return SQLiteConnection
      */
-    public function create(): MySqlConnection
+    public function create(): SQLiteConnection
     {
-        $this->dbManager->connection('mysql');
+        $this->dbManager->connection('sqlite');
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use TinnyApi\User\Repository as UserRepository;
+use TinnyApi\User\RepositoryContract as UserRepository;
 
 class UserController extends Controller
 {
@@ -13,9 +13,10 @@ class UserController extends Controller
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function index(UserRepository $userRepository)
+    public function index(UserRepository $userRepository): JsonResponse
     {
         $users = $userRepository->getAll();
+
         return response()->json($users, Response::HTTP_OK);
     }
 

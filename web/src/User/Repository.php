@@ -4,10 +4,6 @@ namespace TinnyApi\User;
 
 class Repository implements RepositoryContract
 {
-    public function __construct( )
-    {
-    }
-
     public function getAll(): array
     {
 

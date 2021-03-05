@@ -1,4 +1,4 @@
 <?php
 
-require './web.php';
-require './api.php';
+require 'web.php';
+require 'api.php';
