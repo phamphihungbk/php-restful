@@ -15,42 +15,66 @@ class UserController extends Controller
      */
     public function index(UserRepository $userRepository): JsonResponse
     {
-        $users = $userRepository->getAll();
+        $data = $userRepository->getAll();
 
-        return response()->json($users, Response::HTTP_OK);
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * @param UserRepository $userRepository
-     */
-    public function show(UserRepository $userRepository)
-    {
-        //
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
      * @param Request $request
      * @param UserRepository $userRepository
+     * @return JsonResponse
      */
-    public function update(Request $request, UserRepository $userRepository)
+    public function store(Request $request, UserRepository $userRepository): JsonResponse
     {
         $userRepository->update($request->all());
+        $data = [
+            'message' => ''
+        ];
+
+        return response()->json($data, Response::HTTP_OK);
     }
 
     /**
      * @param UserRepository $userRepository
-     * @throws \Exception
+     * @return JsonResponse
      */
-    public function destroy(UserRepository $userRepository)
+    public function show(UserRepository $userRepository): JsonResponse
+    {
+        $data = [
+            'message' => ''
+        ];
+
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserRepository $userRepository
+     * @return JsonResponse
+     */
+    public function update(Request $request, UserRepository $userRepository): JsonResponse
+    {
+        $userRepository->update($request->all());
+        $data = [
+            'message' => ''
+        ];
+
+        return response()->json($data, Response::HTTP_OK);
+    }
+
+    /**
+     * @param UserRepository $userRepository
+     * @return JsonResponse
+     */
+    public function destroy(UserRepository $userRepository): JsonResponse
     {
         $userRepository->delete();
+
+        $data = [
+            'message' => ''
+        ];
+
+        return response()->json($data, Response::HTTP_OK);
     }
 }

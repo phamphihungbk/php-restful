@@ -18,9 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('users', 'Api\UserController@index')->name('users.index');
-Route::get('users/{id}', 'Api\UserController@show')->name('users.show');
-Route::post('users', 'Api\UserController@store')->name('users.store');
-Route::put('users/{id}', 'Api\UserController@update')->name('users.update');
-Route::patch('users/{id}', 'Api\UserController@update')->name('users.update');
-Route::delete('users/{id}', 'Api\UserController@destroy')->name('users.destroy');
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::get('users', 'App\Http\Controllers\UserController@index')->name('users.index');
+    Route::get('users/{id}', 'App\Http\Controllers\UserController@show')->name('users.show');
+    Route::post('users', 'App\Http\Controllers\UserController@store')->name('users.store');
+    Route::put('users/{id}', 'App\Http\Controllers\UserController@update')->name('users.update');
+//    Route::patch('users/{id}', 'App\Http\Controllers\UserController@update')->name('users.update');
+    Route::delete('users/{id}', 'App\Http\Controllers\UserController@destroy')->name('users.destroy');
+});
