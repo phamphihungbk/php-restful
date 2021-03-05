@@ -1,8 +1,6 @@
 <?php
 
-namespace TinnyApi\MySQL;
-
-use TinnyApi\Contracts\DatabaseConnectionFactory;
+namespace TinnyApi\Mysql;
 
 class ConnectionFactory implements DatabaseConnectionFactory
 {

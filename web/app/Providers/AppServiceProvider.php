@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use TinnyApi\Mysql\ConnectionFactory;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,7 +19,6 @@ class AppServiceProvider extends ServiceProvider
 
     private function registerAllServices()
     {
-
     }
 
     /**

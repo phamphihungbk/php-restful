@@ -1,6 +1,6 @@
 <?php
 
-namespace TinnyApi\Contracts;
+namespace TinnyApi\Mysql;
 
 interface DatabaseConnectionFactory
 {
