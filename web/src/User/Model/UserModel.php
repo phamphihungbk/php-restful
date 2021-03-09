@@ -4,6 +4,7 @@ namespace TinnyApi\User\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
+use TinnyApi\User\Factory\UserModelFactory;
 
 class UserModel extends BaseModel
 {
@@ -46,4 +47,12 @@ class UserModel extends BaseModel
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * @return UserModelFactory
+     */
+    protected static function newFactory(): UserModelFactory
+    {
+        return UserModelFactory::new();
+    }
 }

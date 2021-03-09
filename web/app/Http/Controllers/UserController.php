@@ -40,7 +40,7 @@ class UserController extends Controller
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function show(string $email , UserRepository $userRepository): JsonResponse
+    public function show(string $email, UserRepository $userRepository): JsonResponse
     {
         $data = $userRepository->select($email);
 
@@ -55,7 +55,7 @@ class UserController extends Controller
      */
     public function update(string $email, Request $request, UserRepository $userRepository): JsonResponse
     {
-        $userRepository->update($email ,$request->all());
+        $userRepository->update($email, $request->all());
         $data = [
             'message' => 'Update successfully'
         ];
@@ -68,7 +68,7 @@ class UserController extends Controller
      * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function destroy(string $email ,UserRepository $userRepository): JsonResponse
+    public function destroy(string $email, UserRepository $userRepository): JsonResponse
     {
         $userRepository->delete($email);
         $data = [

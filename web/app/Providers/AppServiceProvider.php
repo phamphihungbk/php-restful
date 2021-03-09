@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use TinnyApi\Mysql\ConnectionFactory as MysqlConnection;
+use TinnyApi\MySQL\ConnectionFactory as MysqlConnection;
 use TinnyApi\SQLite\ConnectionFactory as SQLiteConnection;
 use TinnyApi\User\Repository as UserRepository;
 use TinnyApi\User\RepositoryContract as UserRepositoryContract;
