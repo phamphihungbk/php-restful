@@ -22,3 +22,6 @@ migrate-db:
 
 seed-db:
 	docker exec -it api-php sh -c "php artisan db:seed"
+
+route-clear:
+	docker exec -it api-php sh -c "php artisan route:clear"

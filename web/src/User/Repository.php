@@ -18,21 +18,19 @@ class Repository implements RepositoryContract
     /**
      * @param string $email
      * @param array $request
-     * @return mixed
      */
-    public function update(string $email, array $request)
+    public function update(string $email, array $request): void
     {
         $user = UserModel::findOrFail($email);
-        return $user->update($request);
+        $user->update($request);
     }
 
     /**
      * @param array $request
-     * @return mixed
      */
-    public function store(array $request)
+    public function store(array $request): void
     {
-        return UserModel::create($request);
+        UserModel::create($request);
     }
 
     /**
@@ -46,11 +44,10 @@ class Repository implements RepositoryContract
 
     /**
      * @param string $email
-     * @return mixed
      */
-    public function delete(string $email)
+    public function delete(string $email): void
     {
         $user = UserModel::findOrFail($email);
-        return $user->delete();
+        $user->delete();
     }
 }

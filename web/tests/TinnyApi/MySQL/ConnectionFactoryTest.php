@@ -5,7 +5,7 @@ namespace Tests\TinnyApi\MySQL;
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\MySqlConnection;
 use PHPUnit\Framework\TestCase;
-use TinnyApi\Mysql\ConnectionFactory;
+use TinnyApi\MySQL\ConnectionFactory;
 
 class ConnectionFactoryTest extends TestCase
 {

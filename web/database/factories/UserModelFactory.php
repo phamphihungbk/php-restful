@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use TinnyApi\User\Model\UserModel;
 
-class UserFactory extends Factory
+class UserModelFactory extends Factory
 {
     /**
      * @var string

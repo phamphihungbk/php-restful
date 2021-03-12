@@ -1,6 +1,6 @@
 <?php
 
-namespace TinnyApi\Mysql;
+namespace TinnyApi\MySQL;
 
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\MySqlConnection;
