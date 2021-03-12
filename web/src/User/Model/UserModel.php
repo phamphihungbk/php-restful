@@ -4,7 +4,7 @@ namespace TinnyApi\User\Model;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
-use TinnyApi\User\Factory\UserModelFactory;
+use Database\Factories\UserModelFactory;
 
 class UserModel extends BaseModel
 {

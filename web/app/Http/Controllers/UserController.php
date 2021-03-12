@@ -15,7 +15,10 @@ class UserController extends Controller
      */
     public function index(UserRepository $userRepository): JsonResponse
     {
-        $data = $userRepository->getAll();
+        $data = [
+            'message' => 'Get all data successfully',
+            'data' => $userRepository->getAll(),
+        ];
 
         return response()->json($data, Response::HTTP_OK);
     }
@@ -42,7 +45,10 @@ class UserController extends Controller
      */
     public function show(string $email, UserRepository $userRepository): JsonResponse
     {
-        $data = $userRepository->select($email);
+        $data = [
+            'message' => 'Find user successfully',
+            'data' => $userRepository->select($email),
+        ];
 
         return response()->json($data, Response::HTTP_OK);
     }

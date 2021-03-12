@@ -45,8 +45,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/",
-            "ApiResources\\": "src/"
+            "Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",

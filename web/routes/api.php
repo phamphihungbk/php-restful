@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'api/v1'], function () {
-    Route::get('users', ['uses' => 'UserController@index']);
-    Route::get('users/{email}', ['uses' => 'UserController@show']);
-    Route::post('users', ['uses' => 'UserController@store']);
-    Route::put('users/{email}', ['uses' => 'UserController@update']);
-    Route::delete('users/{email}', ['uses' => 'UserController@destroy']);
+    Route::resource('users', UserController::class, [
+        'except' => ['edit', 'create']
+    ]);
 });
