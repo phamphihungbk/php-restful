@@ -34,9 +34,9 @@ class RepositoryTest extends TestCase
             'remember_token' => '563hgjzk35',
         ];
         $this->userModel = $this->getMockBuilder(UserModel::class)
-            ->setMethods(['make', 'all', 'findOrFail', 'update', 'create', 'delete'])
+            ->setMethods(['all', 'findOrFail', 'update', 'create', 'delete'])
             ->getMock();
-        $this->userModel->method('make')->with($data)->willReturnSelf();
+        UserModel::factory()->create($data);
         $this->userRepository = new Repository();
     }
 
@@ -53,17 +53,15 @@ class RepositoryTest extends TestCase
      * @test
      * @dataProvider updateTestDataProvider
      * @param string $email
-     * @param bool $findingResult
      * @param array $request
      */
-    public function updateTest(string $email, bool $findingResult, array $request)
+    public function updateTest(string $email, array $request)
     {
         $this->userModel
             ->method('findOrFail')
             ->with($email)->willReturnSelf();
-        if ($findingResult) {
-            $this->userModel->expects($this->once())->method('update')->with($request)->willReturnSelf();
-        }
+        $this->userModel->expects($this->never())
+            ->method('update')->with($request)->willReturnSelf();
         $this->userRepository->update($email, $request);
     }
 
@@ -72,7 +70,6 @@ class RepositoryTest extends TestCase
         return [
             [
                 'email' => 'missouri62223@example.net',
-                'findingResult' => true,
                 'request' => [
                     'name' => 'Updated name',
                     'email' => 'updated@example.net',
@@ -83,7 +80,6 @@ class RepositoryTest extends TestCase
             ],
             [
                 'email' => 'missouri62223@example.net',
-                'findingResult' => false,
                 'request' => [
                     'name' => 'Updated name',
                     'email' => 'updated@example.net',
@@ -128,7 +124,7 @@ class RepositoryTest extends TestCase
     {
         $email = 'missouri62223@example.net';
         $this->userModel->method('findOrFail')->with($email)->willReturnSelf();
-        $this->userModel->method('delete');
+        $this->userModel->expects($this->never())->method('delete');
         $this->userRepository->delete($email);
     }
 
