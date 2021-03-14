@@ -29,6 +29,9 @@ class HomePageController extends Controller
     public function index()
     {
         $data = [];
-        return view('homepage', $data);
+        $viewData = [
+            'blade' => 'pages.homepage'
+        ];
+        return view($viewData['blade'], $data);
     }
 }

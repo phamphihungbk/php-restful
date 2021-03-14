@@ -32,6 +32,10 @@ class NotFoundException extends Exception
 
     public function index()
     {
-        return Response::view(, $data, $this->statusCode);
+        $data = [];
+        $viewData = [
+            'blade' => '404'
+        ];
+        return Response::view($viewData['blade'], $data, $this->statusCode);
     }
 }
