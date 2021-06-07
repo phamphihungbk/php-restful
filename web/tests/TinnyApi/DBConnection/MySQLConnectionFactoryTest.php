@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\TinnyApi\MySQL;
+namespace Tests\TinnyApi\DBConnection;
 
 use Illuminate\Database\DatabaseManager;
 use Illuminate\Database\MySqlConnection;
 use PHPUnit\Framework\TestCase;
-use TinnyApi\MySQL\ConnectionFactory;
+use TinnyApi\DBConnection\MySQLConnectionFactory;
 
-class ConnectionFactoryTest extends TestCase
+class MySQLConnectionFactoryTest extends TestCase
 {
     /**
      * @test
@@ -17,7 +17,7 @@ class ConnectionFactoryTest extends TestCase
         $dbManager = $this->createMock(DatabaseManager::class);
         $connection = $this->createMock(MySqlConnection::class);
         $dbManager->method('connection')->with('mysql')->willReturn($connection);
-        $connectionFactory = new ConnectionFactory($dbManager);
+        $connectionFactory = new MySQLConnectionFactory($dbManager);
 
         $this->assertInstanceOf(MySqlConnection::class, $connectionFactory->create());
     }

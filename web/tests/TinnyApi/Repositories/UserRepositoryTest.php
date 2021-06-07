@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Tests\TinnyApi\User;
+namespace Tests\TinnyApi\Repositories;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TinnyApi\User\Model\UserModel;
@@ -9,7 +9,7 @@ use TinnyApi\User\Repository;
 use TinnyApi\User\Resource\UserResource;
 use Tests\TestCase;
 
-class RepositoryTest extends TestCase
+class UserRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 

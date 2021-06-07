@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\TinnyApi\User\Model;
+namespace Tests\TinnyApi\Models;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;

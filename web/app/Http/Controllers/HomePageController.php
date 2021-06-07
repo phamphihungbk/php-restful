@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use TinnyApi\MySQL\ConnectionFactory as MysqlConnectionFactory;
-use TinnyApi\SQLite\ConnectionFactory as SqliteConnectionFactory;
+use TinnyApi\MySQL\MYSQLConnectionFactory as MysqlConnectionFactory;
+use TinnyApi\SQLite\SQLiteConnectionFactory as SqliteConnectionFactory;
 use Illuminate\Database\SQLiteConnection;
 use Illuminate\Database\MySqlConnection;
 
