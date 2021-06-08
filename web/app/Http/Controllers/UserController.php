@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Resources\UserCollection;
+use Illuminate\Auth\Events\Registered;
 
 class UserController extends Controller
 {

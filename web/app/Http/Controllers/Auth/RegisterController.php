@@ -12,6 +12,7 @@ use TinnyApi\Rules\WeakPasswordRule;
 use TinnyApi\Traits\ResponseTrait;
 use TinnyApi\User\Model\UserModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -25,6 +26,7 @@ class RegisterController extends Controller
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+        $this->middleware('guest');
     }
 
     /**
@@ -36,7 +38,7 @@ class RegisterController extends Controller
      */
     private function registered(Request $request, UserModel $user)
     {
-        $this->guard()->logout();
+        Auth::guard()->logout();
 
         $message = __(
             'We sent a confirmation email to :email. Please follow the instructions to complete your registration.',
@@ -87,11 +89,13 @@ class RegisterController extends Controller
     private function create(array $data): Model
     {
         return $this->userRepository->store([
-            'email' => $data['email'],
             'name' => $data['name'],
+            'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'is_active' => 1,
             'email_verified_at' => null,
+            'facebook' => $data['facebook'] ?? '',
+            'twitter' => $data['twitter'] ?? '',
         ]);
     }
 }

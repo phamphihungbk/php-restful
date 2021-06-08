@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use TinnyApi\User\Model\UserModel;
+use TinnyApi\Models\UserModel;
 
 class UserModelFactory extends Factory
 {

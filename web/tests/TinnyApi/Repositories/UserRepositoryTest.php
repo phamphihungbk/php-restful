@@ -5,7 +5,7 @@ namespace Tests\TinnyApi\Repositories;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use TinnyApi\User\Model\UserModel;
-use TinnyApi\User\Repository;
+use TinnyApi\User\UserRepository;
 use TinnyApi\User\Resource\UserResource;
 use Tests\TestCase;
 
@@ -19,7 +19,7 @@ class UserRepositoryTest extends TestCase
     private $userModel;
 
     /**
-     * @var Repository
+     * @var UserRepository
      */
     private $userRepository;
 
@@ -37,7 +37,7 @@ class UserRepositoryTest extends TestCase
             ->setMethods(['all', 'findOrFail', 'update', 'create', 'delete'])
             ->getMock();
         UserModel::factory()->create($data);
-        $this->userRepository = new Repository();
+        $this->userRepository = new UserRepository();
     }
 
     /**

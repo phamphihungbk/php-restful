@@ -1,7 +1,8 @@
 <?php
 
-namespace TinnyApi\User\Model;
+namespace TinnyApi\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Database\Factories\UserModelFactory;
@@ -26,7 +27,14 @@ class UserModel extends BaseModel
     protected $keyType = 'string';
 
     /**
-     *
+     * @var string[]
+     */
+    protected $casts = [
+        'id'        => 'string',
+        'is_active' => 'boolean',
+    ];
+
+    /**
      * @var string
      */
     protected $connection = 'mysql';
@@ -34,24 +42,27 @@ class UserModel extends BaseModel
     /**
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * @var array
-     */
-    protected $fillable = ['name', 'email', 'password'];
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    protected $hidden = [
+        'password',
+        'remember_token',
     ];
 
     /**
-     * @return UserModelFactory
+     * @var array
      */
-    protected static function newFactory(): UserModelFactory
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'facebook',
+        'twitter',
+        'email_verified_at',
+    ];
+
+    /**
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
     {
         return UserModelFactory::new();
     }

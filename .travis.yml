@@ -3,12 +3,16 @@ language: php
 php:
   - '7.3'
 
-install:
-  - composer install -d web
+before_script:
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source --dev
 
 script:
   - composer psr-check -d web
   - composer coverage -d web
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 branches:
   except:
