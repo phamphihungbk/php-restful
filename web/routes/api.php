@@ -20,7 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'api/v1'], function () {
-    Route::resource('users', UserController::class, [
-        'except' => ['edit', 'create']
-    ]);
+    Route::post('register', [RegisterController::class, 'register']);
 });

@@ -5,19 +5,31 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
-use TinnyApi\User\RepositoryContract as UserRepository;
+use TinnyApi\Contracts\UserRepository;
+use TinnyApi\Resources\UserCollection;
 
 class UserController extends Controller
 {
     /**
-     * @param UserRepository $userRepository
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
+    /**
+     * List all users.
+     *
      * @return JsonResponse
      */
-    public function index(UserRepository $userRepository): JsonResponse
+    public function index(): JsonResponse
     {
         $data = [
             'message' => 'Get all data successfully',
-            'data' => $userRepository->getAll(),
+            'data' => $this->userRepository->getAll(),
         ];
 
         return response()->json($data, Response::HTTP_OK);
@@ -25,12 +37,11 @@ class UserController extends Controller
 
     /**
      * @param Request $request
-     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function store(Request $request, UserRepository $userRepository): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $userRepository->store($request->all());
+        $this->userRepository->store($request->all());
         $data = [
             'message' => 'Create successfully'
         ];
@@ -40,14 +51,13 @@ class UserController extends Controller
 
     /**
      * @param string $email
-     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function show(string $email, UserRepository $userRepository): JsonResponse
+    public function show(string $email): JsonResponse
     {
         $data = [
             'message' => 'Find user successfully',
-            'data' => $userRepository->select($email),
+            'data' => $this->userRepository->select($email),
         ];
 
         return response()->json($data, Response::HTTP_OK);
@@ -56,12 +66,11 @@ class UserController extends Controller
     /**
      * @param string $email
      * @param Request $request
-     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function update(string $email, Request $request, UserRepository $userRepository): JsonResponse
+    public function update(string $email, Request $request): JsonResponse
     {
-        $userRepository->update($email, $request->all());
+        $this->userRepository->update($email, $request->all());
         $data = [
             'message' => 'Update successfully'
         ];
@@ -71,12 +80,11 @@ class UserController extends Controller
 
     /**
      * @param string $email
-     * @param UserRepository $userRepository
      * @return JsonResponse
      */
-    public function destroy(string $email, UserRepository $userRepository): JsonResponse
+    public function destroy(string $email): JsonResponse
     {
-        $userRepository->delete($email);
+        $this->userRepository->delete($email);
         $data = [
             'message' => 'Delete successfully'
         ];

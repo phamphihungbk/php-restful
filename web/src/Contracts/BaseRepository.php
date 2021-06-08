@@ -1,6 +1,6 @@
 <?php
 
-namespace TinnyApi;
+namespace TinnyApi\Contracts;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -14,6 +14,13 @@ interface BaseRepository
      * @return BaseRepository
      */
     public function with(array $with = []): BaseRepository;
+
+    /**
+     * Set withoutGlobalScopes attribute to true and apply it to the query.
+     *
+     * @return BaseRepository
+     */
+    public function withoutGlobalScopes(): BaseRepository;
 
     /**
      * Find a resource by id.

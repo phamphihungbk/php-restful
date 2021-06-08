@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection
+use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection;
 use TinnyApi\DBConnection\SQLiteConnectionFactory as SQLiteConnection;
 use TinnyApi\User\Repository as UserRepository;
-use TinnyApi\User\RepositoryContract as UserRepositoryContract;
+use TinnyApi\Contracts\UserRepository as UserRepositoryContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             return new UserRepository();
         });
 
-//        $this->app->bind(UserRepositoryContract::class, UserRepository::class);
+        $this->app->bind(UserRepositoryContract::class, UserRepository::class);
 
         $this->app->singleton(MysqlConnection::class, function ($app) {
             return new MysqlConnection($app['db']);
