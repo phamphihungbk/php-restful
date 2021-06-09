@@ -14,7 +14,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable
+  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest -d web
 
 script:
   - composer psr-check -d web
