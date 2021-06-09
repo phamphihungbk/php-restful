@@ -5,6 +5,7 @@ php:
 
 before_script:
   - curl -s http://getcomposer.org/installer | php
+  - cd web
   - php composer.phar install
   - composer install --prefer-source --no-interaction
   - composer dump-autoload
@@ -14,7 +15,7 @@ before_install:
   - travis_retry composer self-update
 
 install:
-  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest -d web
+  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest
 
 script:
   - composer psr-check -d web
