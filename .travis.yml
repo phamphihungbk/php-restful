@@ -12,7 +12,7 @@ before_script:
   - php artisan clear-compiled
 
 before_install:
-  - travis_retry composer self-update
+  - travis_retry composer self-update -d web
 
 install:
   - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest -d web
