@@ -53,7 +53,7 @@
     "prefer-stable": true,
     "scripts": {
         "tests": "./vendor/bin/phpunit -c phpunit.xml tests/",
-        "coverage": "./vendor/bin/phpunit -d memory_limit=2048M -c phpunit.xml tests/  --coverage-html coverage",
+        "coverage": "./vendor/bin/phpunit -d memory_limit=2048M -c phpunit.xml tests/  --coverage-html coverage --coverage-clover coverage.xml",
         "psr-check": "./vendor/bin/phpcs --standard=PSR2 --colors ./src",
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",

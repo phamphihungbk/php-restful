@@ -12,7 +12,11 @@
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./app/Http/Controllers</directory>
         </include>
+        <report>
+            <clover outputFile="clover.xml"/>
+        </report>
     </coverage>
     <php>
         <server name="APP_ENV" value="testing"/>

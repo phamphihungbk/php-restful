@@ -1,8 +1,8 @@
 up:
-	docker-compose -f ./environment/docker-compose.yml --env-file ../.env up --remove-orphans -d
+	docker-compose -f ./environment/docker-compose.yml --env-file ./.env up --remove-orphans -d
 
 build: copy-files
-	docker-compose -f ./environment/docker-compose.yml --env-file ../.env build
+	docker-compose -f ./environment/docker-compose.yml --env-file ./.env build
 
 down:
 	docker-compose -f ./environment/docker-compose.yml down --remove-orphans

@@ -19,11 +19,6 @@ class UserModel extends BaseModel
     /**
      * @var string
      */
-    protected $primaryKey = 'email';
-
-    /**
-     * @var string
-     */
     protected $keyType = 'string';
 
     /**
