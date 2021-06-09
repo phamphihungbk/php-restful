@@ -4,8 +4,17 @@ php:
   - '7.3'
 
 before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+  - composer install --prefer-source --no-interaction
+  - composer dump-autoload
+  - php artisan clear-compiled
+
+before_install:
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source --dev
+
+install:
+  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest
 
 script:
   - composer psr-check -d web

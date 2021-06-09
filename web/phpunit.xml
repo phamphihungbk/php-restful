@@ -16,6 +16,7 @@
         </include>
         <report>
             <clover outputFile="clover.xml"/>
+            <xml outputDirectory="./"/>
         </report>
     </coverage>
     <php>
