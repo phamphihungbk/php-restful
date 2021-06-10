@@ -4,18 +4,8 @@ php:
   - '7.3'
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - cd web
-  - php composer.phar install
-  - composer install --prefer-source --no-interaction
-  - composer dump-autoload
-  - php artisan clear-compiled
-
-before_install:
   - travis_retry composer self-update -d web
-
-install:
-  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest -d web
+  - travis_retry install --prefer-source --no-interaction --dev -d web
 
 script:
   - composer psr-check -d web
@@ -30,4 +20,7 @@ branches:
 
 cache:
   directories:
-    - $HOME/.composer/cache
+    - $HOME/.composer/cache/files
+
+notifications:
+  email: false
