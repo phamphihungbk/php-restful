@@ -14,7 +14,8 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.2"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -55,12 +56,13 @@
         "tests": "./vendor/bin/phpunit -c phpunit.xml tests/",
         "coverage": "./vendor/bin/phpunit -d memory_limit=2048M -c phpunit.xml tests/  --coverage-html coverage --coverage-clover coverage.xml",
         "psr-check": "./vendor/bin/phpcs --standard=PSR2 --colors ./src",
+        "compile-app-cache": [
+            "php artisan route:cache",
+            "php artisan config:cache"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
-        ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"

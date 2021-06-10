@@ -15,10 +15,13 @@
             <directory suffix=".php">./app/Http/Controllers</directory>
         </include>
         <report>
-            <clover outputFile="clover.xml"/>
-            <xml outputDirectory="./"/>
+            <clover outputFile="./tests/coverage/coverage.xml"/>
+            <html outputDirectory="./tests/coverage" lowUpperBound="50" highLowerBound="80"/>
         </report>
     </coverage>
+    <logging>
+        <junit outputFile="./tests/coverage/logfile.xml"/>
+    </logging>
     <php>
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
@@ -29,5 +32,7 @@
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
         <server name="TELESCOPE_ENABLED" value="false"/>
+        <ini name="display_errors" value="true"/>
+        <ini name="memory_limit" value="2048"/>
     </php>
 </phpunit>

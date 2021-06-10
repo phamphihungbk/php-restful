@@ -5,18 +5,19 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Validation\Factory as ValidatorFactory;
+use Illuminate\Foundation\Auth\RedirectsUsers;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator as ValidatorFactory;
 use TinnyApi\Contracts\UserRepository;
+use TinnyApi\Models\UserModel;
 use TinnyApi\Rules\WeakPasswordRule;
 use TinnyApi\Traits\ResponseTrait;
-use TinnyApi\User\Model\UserModel;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    use ResponseTrait;
+    use ResponseTrait, RedirectsUsers, RegistersUsers;
 
     /**
      * @var UserRepository
@@ -36,9 +37,9 @@ class RegisterController extends Controller
      * @param UserModel $user
      * @return mixed
      */
-    private function registered(Request $request, UserModel $user)
+    protected function registered(Request $request, UserModel $user)
     {
-        Auth::guard()->logout();
+        $this->guard()->logout();
 
         $message = __(
             'We sent a confirmation email to :email. Please follow the instructions to complete your registration.',
@@ -54,30 +55,29 @@ class RegisterController extends Controller
      * @param array $data
      * @return Validator
      */
-    private function getValidator(array $data): Validator
+    protected function validator(array $data): Validator
     {
         return ValidatorFactory::make($data, [
-                'name' => [
-                    'required',
-                    'string',
-                    'max:255',
-                ],
-                'email' => [
-                    'required',
-                    'string',
-                    'email',
-                    'max:255',
-                    'unique:users,email',
-                ],
-                'password' => [
-                    'required',
-                    'string',
-                    'min:8',
-                    'confirmed',
-                    new WeakPasswordRule(),
-                ],
-            ]
-        );
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:users,email',
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                new WeakPasswordRule(),
+            ],
+        ]);
     }
 
     /**
@@ -86,7 +86,7 @@ class RegisterController extends Controller
      * @param array $data
      * @return Model
      */
-    private function create(array $data): Model
+    protected function create(array $data): Model
     {
         return $this->userRepository->store([
             'name' => $data['name'],

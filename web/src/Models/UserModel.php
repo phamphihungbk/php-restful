@@ -2,14 +2,16 @@
 
 namespace TinnyApi\Models;
 
+use Database\Factories\UserModelFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model as BaseModel;
-use Database\Factories\UserModelFactory;
+use Illuminate\Foundation\Auth\User as UserBaseModel;
 
-class UserModel extends BaseModel
+class UserModel extends UserBaseModel
 {
     use HasFactory;
+
+    public $incrementing = false;
 
     /**
      * @var string
@@ -28,11 +30,6 @@ class UserModel extends BaseModel
         'id'        => 'string',
         'is_active' => 'boolean',
     ];
-
-    /**
-     * @var string
-     */
-    protected $connection = 'mysql';
 
     /**
      * @var array
