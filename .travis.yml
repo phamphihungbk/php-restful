@@ -12,7 +12,7 @@ script:
   - composer coverage -d web
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -t 'a55e3e8e-e439-4626-af0b-f5371161d77e'
 
 branches:
   except:
