@@ -9,7 +9,9 @@ use Illuminate\Foundation\Auth\RedirectsUsers;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator as ValidatorFactory;
+use Ramsey\Uuid\Uuid;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Rules\WeakPasswordRule;
@@ -88,10 +90,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data): Model
     {
+//        dd($data, $this->userRepository);
         return $this->userRepository->store([
+            'id' => Uuid::uuid4()->toString(),
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             'is_active' => 1,
             'email_verified_at' => null,
             'facebook' => $data['facebook'] ?? '',

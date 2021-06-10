@@ -5,11 +5,12 @@ namespace TinnyApi\Models;
 use Database\Factories\UserModelFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as UserBaseModel;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class UserModel extends UserBaseModel
+class UserModel extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public $incrementing = false;
 
@@ -19,15 +20,9 @@ class UserModel extends UserBaseModel
     protected $table = 'users';
 
     /**
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
      * @var string[]
      */
     protected $casts = [
-        'id'        => 'string',
         'is_active' => 'boolean',
     ];
 
@@ -43,6 +38,7 @@ class UserModel extends UserBaseModel
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',

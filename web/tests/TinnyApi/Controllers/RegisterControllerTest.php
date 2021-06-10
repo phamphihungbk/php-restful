@@ -12,16 +12,10 @@ class RegisterControllerTest extends TestCase
      */
     public function testCanRegister()
     {
-//        dd($this->postJson(route('api.auth.register'), [
-//            'name'                  => 'test',
-//            'email'                 => 'test@test.com',
-//            'password'              => 'secretxxx-test',
-//            'password_confirmation' => 'secretxxx-test',
-//        ]));
         $this->postJson(route('api.auth.register'), [
-            'name'                  => 'test',
-            'email'                 => 'test@test.com',
-            'password'              => 'secretxxx-test',
+            'name' => 'test',
+            'email' => 'test@test.com',
+            'password' => 'secretxxx-test',
             'password_confirmation' => 'secretxxx-test',
         ])
             ->assertStatus(Response::HTTP_CREATED)
