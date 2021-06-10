@@ -3,12 +3,26 @@ language: php
 php:
   - '7.3'
 
+before_script:
+  - curl -s http://getcomposer.org/installer | php
+  - cd web
+  - php composer.phar install
+  - composer install --prefer-source --no-interaction
+  - composer dump-autoload
+  - php artisan clear-compiled
+
+before_install:
+  - travis_retry composer self-update -d web
+
 install:
-  - composer install -d web
+  - travis_retry composer update --prefer-dist --no-interaction --prefer-stable --no-suggest -d web
 
 script:
   - composer psr-check -d web
   - composer coverage -d web
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 branches:
   except:
