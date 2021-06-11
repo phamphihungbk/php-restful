@@ -17,5 +17,5 @@ abstract class AbstractConnectionFactory
         $this->dbManager = $dbManager;
     }
 
-    abstract function create(): Connection;
+    abstract protected function create(): Connection;
 }

@@ -25,3 +25,6 @@ seed-db:
 
 route-clear:
 	docker exec -it api-php sh -c "php artisan route:clear"
+
+config-cache:
+	docker exec -it api-php sh -c "php artisan config:cache"
