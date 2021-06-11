@@ -9,8 +9,8 @@ before_script:
   - cd web && php artisan config:cache
 
 script:
-  - composer psr-check -d web
-  - composer coverage -d web
+  - composer psr-check
+  - composer coverage
 
 after_success:
   - bash <(curl -s https://codecov.io/bash) -t 'a55e3e8e-e439-4626-af0b-f5371161d77e'
