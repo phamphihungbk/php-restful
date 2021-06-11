@@ -9,7 +9,7 @@ services:
   - mysql
 
 before_script:
-  - echo 'xdebug.mode=coverage' >>  ~/.phpenv/versions/$(phpenv global 7.3)/etc/php.ini
+  - echo 'xdebug.mode=coverage' >>  ~/.phpenv/versions/7.3/etc/php.ini
   - cp ./config/.env.testing ./web/.env
   - mysql -e 'create database testing;'
   - travis_retry composer self-update -d web
