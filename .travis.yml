@@ -3,10 +3,17 @@ language: php
 php:
   - '7.3'
 
+os: linux
+
+services:
+  - mysql
+
 before_script:
+  - cp ./config/.env.testing ./web/.env
+  - mysql -e 'create database testing;'
   - travis_retry composer self-update -d web
   - travis_retry composer install --prefer-source --no-interaction --dev -d web --optimize-autoloader
-  - cd web && php artisan config:cache
+  - cd web && php artisan key:generate && php artisan migrate && php artisan config:clear
 
 script:
   - composer psr-check
@@ -25,3 +32,7 @@ cache:
 
 notifications:
   email: false
+  slack:
+    on_success: always
+    rooms:
+      - gaminglake:IEwp6isRxPevEqmkWBnflBa3
