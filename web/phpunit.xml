@@ -34,7 +34,5 @@
         <server name="TELESCOPE_ENABLED" value="false"/>
         <ini name="display_errors" value="true"/>
         <ini name="memory_limit" value="2048"/>
-        <ini name="xdebug.mode" value="coverage" />
-        <env name="XDEBUG_MODE" value="coverage" />
     </php>
 </phpunit>
