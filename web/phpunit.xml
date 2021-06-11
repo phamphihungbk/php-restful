@@ -15,7 +15,7 @@
             <directory suffix=".php">./app/Http/Controllers</directory>
         </include>
         <report>
-            <clover outputFile="./tests/coverage/coverage.xml"/>
+            <clover outputFile="coverage.xml"/>
             <html outputDirectory="./tests/coverage" lowUpperBound="50" highLowerBound="80"/>
         </report>
     </coverage>
