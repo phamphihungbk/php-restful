@@ -8,7 +8,7 @@ os: linux
 before_script:
   - travis_retry composer self-update -d web
   - travis_retry composer install --prefer-source --no-interaction --dev -d web --optimize-autoloader
-  - cd web && php artisan config:cache
+  - cd web && php php artisan config:clear
 
 script:
   - composer psr-check
