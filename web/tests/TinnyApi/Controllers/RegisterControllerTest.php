@@ -8,12 +8,15 @@ use TinnyApi\Models\UserModel;
 
 class RegisterControllerTest extends TestCase
 {
+    const REGISTER_ROUTER = 'api.auth.register';
+
     /**
      * @test
      */
     public function testCanRegister()
     {
-        $this->postJson(route('api.auth.register'), [
+        $this->postJson(route(self::REGISTER_ROUTER), [
+            'id' => 'id-test',
             'name' => 'test',
             'email' => 'test@test.com',
             'password' => 'secretxxx-test',
@@ -28,7 +31,8 @@ class RegisterControllerTest extends TestCase
      */
     public function testCannotRegisterBecausePasswordIsTooShort()
     {
-        $this->postJson(route('api.auth.register'), [
+        $this->postJson(route(self::REGISTER_ROUTER), [
+            'id' => 'id-test',
             'name'                  => 'test',
             'email'                 => 'test@test.com',
             'password'              => 'secret',
@@ -43,7 +47,8 @@ class RegisterControllerTest extends TestCase
      */
     public function testCannotRegisterBecausePasswordIsWeak()
     {
-        $this->postJson(route('api.auth.register'), [
+        $this->postJson(route(self::REGISTER_ROUTER), [
+            'id' => 'id-test',
             'name'                  => 'test',
             'email'                 => 'test@test.com',
             'password'              => 'secretxxx',
@@ -58,7 +63,8 @@ class RegisterControllerTest extends TestCase
      */
     public function testCannotRegisterBecausePasswordsNotMatch()
     {
-        $this->postJson(route('api.auth.register'), [
+        $this->postJson(route(self::REGISTER_ROUTER), [
+            'id' => 'id-test',
             'name'                  => 'test',
             'email'                 => 'test@test.com',
             'password'              => 'secretxxx1',
@@ -78,7 +84,8 @@ class RegisterControllerTest extends TestCase
             'password' => bcrypt('secretxxx'),
         ]);
 
-        $this->postJson(route('api.auth.register'), [
+        $this->postJson(route(self::REGISTER_ROUTER), [
+            'id' => 'id-test',
             'email'                 => 'test@test.com',
             'password'              => 'secretxxx-test',
             'password_confirmation' => 'secretxxx-test',

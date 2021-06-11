@@ -3,6 +3,8 @@ language: php
 php:
   - '7.3'
 
+os: linux
+
 before_script:
   - travis_retry composer self-update -d web
   - travis_retry composer install --prefer-source --no-interaction --dev -d web --optimize-autoloader
