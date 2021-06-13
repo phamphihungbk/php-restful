@@ -2,6 +2,7 @@
 
 namespace TinnyApi\Contracts;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -57,4 +58,11 @@ interface BaseRepository
      * @return Model
      */
     public function update(Model $model, array $data): Model;
+
+    /**
+     * Search All resources by spatie query builder.
+     *
+     * @return LengthAwarePaginator
+     */
+    public function findByFilters(): LengthAwarePaginator;
 }
