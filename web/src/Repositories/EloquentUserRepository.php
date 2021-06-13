@@ -5,6 +5,7 @@ namespace TinnyApi\Repositories;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\QueryBuilder\QueryBuilder;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Models\UserModel;
 

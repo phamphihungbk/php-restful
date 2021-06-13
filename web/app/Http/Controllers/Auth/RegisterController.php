@@ -25,10 +25,15 @@ class RegisterController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+    /**
+     * @var WeakPasswordRule
+     */
+    private $passwordRule;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, WeakPasswordRule $passwordRule)
     {
         $this->userRepository = $userRepository;
+        $this->passwordRule = $passwordRule;
         $this->middleware('guest');
     }
 
@@ -77,7 +82,7 @@ class RegisterController extends Controller
                 'string',
                 'min:8',
                 'confirmed',
-                new WeakPasswordRule(),
+                $this->passwordRule,
             ],
         ]);
     }
@@ -90,7 +95,6 @@ class RegisterController extends Controller
      */
     protected function create(array $data): Model
     {
-//        dd($data, $this->userRepository);
         return $this->userRepository->store([
             'id' => Uuid::uuid4()->toString(),
             'name' => $data['name'],
