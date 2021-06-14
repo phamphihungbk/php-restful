@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1623600107">
-  <project timestamp="1623600107">
+<coverage generated="1623600985">
+  <project timestamp="1623600985">
     <file name="/web/app/Http/Controllers/Auth/RegisterController.php">
       <class name="App\Http\Controllers\Auth\RegisterController" namespace="global">
         <metrics complexity="4" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="28" coveredelements="28"/>

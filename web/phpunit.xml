@@ -16,7 +16,7 @@
         </include>
     </coverage>
     <logging>
-        <junit outputFile="./tests/coverage/logfile.xml"/>
+        <junit outputFile="./tests/log/logfile.xml"/>
     </logging>
     <php>
         <server name="APP_ENV" value="testing"/>
