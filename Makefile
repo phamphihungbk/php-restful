@@ -28,3 +28,6 @@ route-clear:
 
 config-cache:
 	docker exec -it api-php sh -c "php artisan config:cache"
+
+code-coverage:
+	docker exec -it api-php sh -c "composer coverage"

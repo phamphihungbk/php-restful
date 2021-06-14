@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1623584235">
-  <project timestamp="1623584235">
+<coverage generated="1623600985">
+  <project timestamp="1623600985">
     <file name="/web/app/Http/Controllers/Auth/RegisterController.php">
       <class name="App\Http\Controllers\Auth\RegisterController" namespace="global">
         <metrics complexity="4" methods="4" coveredmethods="4" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="24" elements="28" coveredelements="28"/>
@@ -92,28 +92,28 @@
     </file>
     <file name="/web/src/DBConnection/AbstractConnectionFactory.php">
       <class name="TinnyApi\DBConnection\AbstractConnectionFactory" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
       </class>
-      <line num="15" type="method" name="__construct" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="17" type="stmt" count="0"/>
-      <line num="18" type="stmt" count="0"/>
-      <metrics loc="21" ncloc="18" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+      <line num="15" type="method" name="__construct" visibility="public" complexity="1" crap="1" count="2"/>
+      <line num="17" type="stmt" count="2"/>
+      <line num="18" type="stmt" count="2"/>
+      <metrics loc="21" ncloc="18" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="2" elements="3" coveredelements="3"/>
     </file>
     <file name="/web/src/DBConnection/MySQLConnectionFactory.php">
       <class name="TinnyApi\DBConnection\MySQLConnectionFactory" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </class>
-      <line num="13" type="method" name="create" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <metrics loc="17" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+      <line num="13" type="method" name="create" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="15" type="stmt" count="1"/>
+      <metrics loc="17" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
     </file>
     <file name="/web/src/DBConnection/SQLiteConnectionFactory.php">
       <class name="TinnyApi\DBConnection\SQLiteConnectionFactory" namespace="global">
-        <metrics complexity="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+        <metrics complexity="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
       </class>
-      <line num="13" type="method" name="create" visibility="public" complexity="1" crap="2" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <metrics loc="17" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="0" elements="2" coveredelements="0"/>
+      <line num="13" type="method" name="create" visibility="public" complexity="1" crap="1" count="1"/>
+      <line num="15" type="stmt" count="1"/>
+      <metrics loc="17" ncloc="14" classes="1" methods="1" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="1" coveredstatements="1" elements="2" coveredelements="2"/>
     </file>
     <file name="/web/src/Factories/UserModelFactory.php">
       <class name="Database\Factories\UserModelFactory" namespace="global">
@@ -259,6 +259,6 @@
       <line num="59" type="stmt" count="0"/>
       <metrics loc="62" ncloc="42" classes="1" methods="4" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="4" elements="14" coveredelements="6"/>
     </file>
-    <metrics files="18" loc="814" ncloc="592" classes="14" methods="35" coveredmethods="13" conditionals="0" coveredconditionals="0" statements="124" coveredstatements="51" elements="159" coveredelements="64"/>
+    <metrics files="18" loc="814" ncloc="592" classes="14" methods="35" coveredmethods="16" conditionals="0" coveredconditionals="0" statements="124" coveredstatements="55" elements="159" coveredelements="71"/>
   </project>
 </coverage>
