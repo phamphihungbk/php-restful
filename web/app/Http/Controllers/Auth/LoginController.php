@@ -9,7 +9,7 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Cache\Repository as CacheRepository;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Traits\ResponseTrait;
 
@@ -18,13 +18,19 @@ class LoginController extends Controller
     use AuthenticatesUsers, ValidatesRequests, ResponseTrait;
 
     /**
+     * @var CacheRepository
+     */
+    private $cacheRepository;
+
+    /**
      * Create a new controller instance.
      *
-     * @return void
+     * @param CacheRepository $cacheRepository
      */
-    public function __construct()
+    public function __construct(CacheRepository $cacheRepository)
     {
         $this->middleware('guest')->except('logout');
+        $this->cacheRepository = $cacheRepository;
     }
 
     /**
@@ -54,11 +60,9 @@ class LoginController extends Controller
 
         try {
             $this->checkUserIfIsActive($user, $request);
-            $data['user_id'] = $user->id;
         } catch (LockedException $exception) {
             return $this->respondWithCustomData([
                 'message' => $exception->getMessage(),
-                'isVerify2fa' => false,
             ], Response::HTTP_LOCKED);
         }
 
@@ -68,9 +72,9 @@ class LoginController extends Controller
         $expiration = $this->guard()->getPayload()->get('exp');
 
         return $this->respondWithCustomData([
-            'token' => $token,
-            'tokenType' => 'Bearer',
-            'expiresIn' => $expiration - time(),
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'expires_in' => $expiration - time(),
         ]);
     }
 
@@ -83,7 +87,7 @@ class LoginController extends Controller
         if (!$user->is_active) {
             $this->logout($request);
 
-            $supportLink = config('app.support_url');
+            $supportLink = config('support.support_url');
 
             $message = __(
                 'Your account has been disabled, to enable it again, ' .
@@ -105,8 +109,8 @@ class LoginController extends Controller
     {
         $id = $this->guard()->id();
 
-        Cache::forget($id);
-        Cache::tags('users:' . $id)->flush();
+        $this->cacheRepository->forget($id);
+        $this->cacheRepository->tags('users:' . $id)->flush();
 
         $this->guard()->logout();
     }

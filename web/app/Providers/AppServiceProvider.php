@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection;
 use TinnyApi\DBConnection\SQLiteConnectionFactory as SQLiteConnection;
-use TinnyApi\Repositories\EloquentUserRepository;
+use TinnyApi\Repositories\UserEloquentRepository;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Rules\WeakPasswordRule;
 
@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(UserRepository::class, function () {
-            return new EloquentUserRepository(new UserModel());
+            return new UserEloquentRepository(new UserModel());
         });
 
         $this->app->singleton(WeakPasswordRule::class, function ($app) {
