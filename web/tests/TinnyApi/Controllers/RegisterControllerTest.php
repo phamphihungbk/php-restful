@@ -37,7 +37,7 @@ class RegisterControllerTest extends TestCase
             'password_confirmation' => 'secret',
         ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertSee('The password must be at least 8 characters');
+            ->assertSee('The given data was invalid.');
     }
 
     /**
@@ -52,7 +52,7 @@ class RegisterControllerTest extends TestCase
             'password_confirmation' => 'secretxxx',
         ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertSee('This password is just too common. Please try another!');
+            ->assertSee('The given data was invalid.');
     }
 
     /**
@@ -67,7 +67,7 @@ class RegisterControllerTest extends TestCase
             'password_confirmation' => 'secretxxx2',
         ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertSee('The password confirmation does not match');
+            ->assertSee('The given data was invalid.');
     }
 
     /**
@@ -86,6 +86,6 @@ class RegisterControllerTest extends TestCase
             'password_confirmation' => 'secretxxx-test',
         ])
             ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->assertSee('email has already been taken');
+            ->assertSee('The given data was invalid.');
     }
 }

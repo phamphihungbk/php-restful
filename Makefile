@@ -13,6 +13,9 @@ create-db:
 install:
 	docker exec -it api-php bash -c "composer install"
 
+update:
+	docker exec -it api-php bash -c "composer update"
+
 copy-files:
 	cp ./config/.env.local ./.env
 	cp ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql.example ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql
