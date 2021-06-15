@@ -17,6 +17,8 @@ coverage:
         target: 80%
         threshold: 70%
         base: auto
+        branches:
+          - master
         if_ci_failed: error
         only_pulls: false
         paths:
