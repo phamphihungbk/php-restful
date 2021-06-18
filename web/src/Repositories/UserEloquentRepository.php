@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Models\UserModel;
 
-class EloquentUserRepository extends EloquentAbstractRepository implements UserRepository
+class UserEloquentRepository extends AbstractEloquentRepository implements UserRepository
 {
     /**
      * @var string

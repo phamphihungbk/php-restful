@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Ramsey\Uuid\Uuid;
 use TinnyApi\Contracts\BaseRepository;
 
-abstract class EloquentAbstractRepository implements BaseRepository
+abstract class AbstractEloquentRepository implements BaseRepository
 {
     /**
      * @var bool
