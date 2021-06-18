@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\LockedException;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Cache\Repository as CacheRepository;
-use Illuminate\Support\Facades\Auth;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Traits\ResponseTrait;
 
@@ -63,13 +63,13 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        $token = $user->createToken('tinnyapi Personal Access Client');
-        dd($token);
-        $expiration = '';
+        $token = $user->createToken('TINNY-API Personal Access Client');
+        $expiration = Carbon::parse($token->token->expires_at)->toDateTimeString();
 
         return $this->respondWithCustomData([
-            'access_token' => $token,
+            'access_token' => $token->accessToken,
             'token_type' => 'Bearer',
+            'expires_at' => $expiration
         ]);
     }
 
