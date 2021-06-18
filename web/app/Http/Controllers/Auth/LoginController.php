@@ -31,7 +31,7 @@ class LoginController extends Controller
      */
     public function __construct(CacheRepository $cacheRepository)
     {
-//        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except('logout');
         $this->cacheRepository = $cacheRepository;
     }
 

@@ -54,7 +54,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception): Response
     {
-        dd($exception->getMessage());
         $exceptionInstance = get_class($exception);
 
         switch ($exceptionInstance) {
