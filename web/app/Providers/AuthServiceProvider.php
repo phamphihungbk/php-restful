@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Laravel\Passport\Passport;
+use TinnyApi\Models\UserModel as User;
+use TinnyApi\Policies\UserPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -12,7 +15,9 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [];
+    protected $policies = [
+        User::class => UserPolicy::class
+    ];
 
     /**
      * Register any authentication / authorization services.
@@ -22,7 +27,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Passport::routes();
+        Passport::ignoreMigrations();
     }
 }

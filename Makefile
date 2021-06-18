@@ -10,20 +10,20 @@ down:
 create-db:
 	docker exec -it api-mysql sh -c "mysql -u root < /docker-entrypoint-initdb.d/createdb.sql"
 
-install:
+composer-install:
 	docker exec -it api-php bash -c "composer install"
 
-update:
+composer-update:
 	docker exec -it api-php bash -c "composer update"
 
 copy-files:
 	cp ./config/.env.local ./.env
 	cp ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql.example ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql
 
-migrate-db:
+db-migrate:
 	docker exec -it api-php sh -c "php artisan migrate"
 
-seed-db:
+db-seed:
 	docker exec -it api-php sh -c "php artisan db:seed"
 
 route-clear:

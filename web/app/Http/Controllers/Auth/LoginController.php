@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Support\Facades\Auth;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Traits\ResponseTrait;
 
@@ -29,7 +31,7 @@ class LoginController extends Controller
      */
     public function __construct(CacheRepository $cacheRepository)
     {
-        $this->middleware('guest')->except('logout');
+//        $this->middleware('guest')->except('logout');
         $this->cacheRepository = $cacheRepository;
     }
 
@@ -38,14 +40,7 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request): bool
     {
-        $token = $this->guard()->attempt($this->credentials($request));
-
-        if ($token) {
-            $this->guard()->setToken($token);
-            return true;
-        }
-
-        return false;
+        return $this->guard()->attempt($this->credentials($request));
     }
 
     /**
@@ -68,13 +63,13 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        $token = (string)$this->guard()->getToken();
-        $expiration = $this->guard()->getPayload()->get('exp');
+        $token = $user->createToken('tinnyapi Personal Access Client');
+        dd($token);
+        $expiration = '';
 
         return $this->respondWithCustomData([
             'access_token' => $token,
             'token_type' => 'Bearer',
-            'expires_in' => $expiration - time(),
         ]);
     }
 
@@ -103,15 +98,25 @@ class LoginController extends Controller
      * Log the user out of the application.
      *
      * @param Request $request
-     * @return void
+     * @return RedirectResponse|JsonResponse
      */
-    public function logout(Request $request): void
+    public function logout(Request $request)
     {
         $id = $this->guard()->id();
 
         $this->cacheRepository->forget($id);
-        $this->cacheRepository->tags('users:' . $id)->flush();
+//        $this->cacheRepository->tags('users:' . $id)->flush();
 
         $this->guard()->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        if ($response = $this->loggedOut($request)) {
+            return $response;
+        }
+
+        return $request->wantsJson()
+            ? new JsonResponse([], 204)
+            : redirect('/');
     }
 }
