@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
             return new SQLiteConnection($app['db']);
         });
 
-        $this->app->singleton(UserRepository::class, function () {
-            return new UserEloquentRepository(new UserModel());
+        $this->app->singleton(UserRepository::class, function ($app) {
+            return new UserEloquentRepository(new UserModel(), $app['cache.store']);
         });
 
         $this->app->singleton(WeakPasswordRule::class, function ($app) {

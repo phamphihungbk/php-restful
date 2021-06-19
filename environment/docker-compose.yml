@@ -14,8 +14,8 @@ services:
     container_name: api-php
     working_dir: /web
     volumes:
-    - ../web:/web
-    - ../.env:/web/.env
+      - ../web:/web
+      - ../.env:/web/.env
     tty: true
     networks:
       - frontend
@@ -32,8 +32,8 @@ services:
     depends_on:
       - php-fpm
     ports:
-    - 80:80
-    - 443:443
+      - 80:80
+      - 443:443
     networks:
       - frontend
 
@@ -46,8 +46,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=secret
     volumes:
-    - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-    - ./mysql/data:/var/lib/mysql
+      - ./mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./mysql/data:/var/lib/mysql
     networks:
       - backend
 
@@ -67,3 +67,29 @@ services:
     networks:
       - frontend
       - backend
+
+  syslog-ng:
+    image: api-syslog-ng
+    build:
+      context: ./syslog-ng
+    container_name: api-syslog-ng
+    volumes:
+      - ../logs/nginx:/var/log/nginx
+      - ../logs/fpm:/var/log/fpm
+    environment:
+      SYSLOG_DRIVER: file
+    networks:
+      - frontend
+    command: "--no-caps"
+
+  memcached:
+    image: api-memcached
+    build:
+      context: ./memcached
+    container_name: api-memcached
+    volumes:
+      - ./memcached/data:/var/lib/memcached
+    depends_on:
+      - php-fpm
+    networks:
+      - frontend

@@ -5,7 +5,7 @@ namespace TinnyApi\Repositories;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Cache\Repository as CacheRepository;
 use Ramsey\Uuid\Uuid;
 use TinnyApi\Contracts\BaseRepository;
 
@@ -27,13 +27,20 @@ abstract class AbstractEloquentRepository implements BaseRepository
     protected $with;
 
     /**
+     * @var CacheRepository
+     */
+    private $cacheRepository;
+
+    /**
      * EloquentRepository constructor.
      *
      * @param Model $model
+     * @param CacheRepository $cacheRepository
      */
-    public function __construct(Model $model)
+    public function __construct(Model $model, CacheRepository $cacheRepository)
     {
         $this->model = $model;
+        $this->cacheRepository = $cacheRepository;
     }
 
     /**
@@ -67,7 +74,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
             return $this->findOneBy(['id' => $id]);
         }
 
-        return Cache::remember($id, now()->addHour(), function () use ($id) {
+        return $this->cacheRepository->remember($id, now()->addHour(), function () use ($id) {
             return $this->findOneBy(['id' => $id]);
         });
     }
