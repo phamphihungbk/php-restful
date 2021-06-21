@@ -22,7 +22,8 @@ class UserEloquentRepository extends AbstractEloquentRepository implements UserR
     private $defaultSelect = [
         'id',
         'email',
-        'is_active',
+        'facebook',
+        'twitter',
         'email_verified_at',
         'created_at',
         'updated_at',
@@ -47,11 +48,6 @@ class UserEloquentRepository extends AbstractEloquentRepository implements UserR
      * @var array
      */
     private $allowedIncludes = [
-        'profile',
-        'authorizeddevices',
-        'loginhistories',
-        'notifications',
-        'unreadnotifications',
     ];
 
     /**
