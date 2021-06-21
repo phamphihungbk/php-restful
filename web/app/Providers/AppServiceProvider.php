@@ -8,6 +8,7 @@ use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection;
 use TinnyApi\DBConnection\SQLiteConnectionFactory as SQLiteConnection;
 use TinnyApi\Repositories\UserEloquentRepository;
 use TinnyApi\Models\UserModel;
+use TinnyApi\Rules\CurrentPasswordRule;
 use TinnyApi\Rules\WeakPasswordRule;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +39,10 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(WeakPasswordRule::class, function ($app) {
             return new WeakPasswordRule($app['cache.store']);
+        });
+
+        $this->app->singleton(CurrentPasswordRule::class, function ($app) {
+            return new CurrentPasswordRule($app['hash'], $app['auth']->viaRequest());
         });
     }
 

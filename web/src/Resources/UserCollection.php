@@ -2,12 +2,14 @@
 
 namespace TinnyApi\Resources;
 
+use Illuminate\Http\Request;
+
 class UserCollection extends UserResource
 {
     /**
      * Transform the resource collection into an array.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request): array

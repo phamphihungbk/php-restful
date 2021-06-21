@@ -6,25 +6,20 @@ use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Http\Request;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Models\UserModel as User;
+use TinnyApi\Requests\PasswordUpdateRequest;
+use TinnyApi\Requests\UserUpdateRequest;
 use TinnyApi\Resources\UserCollection;
 use TinnyApi\Resources\UserResource;
+use TinnyApi\Traits\ResponseTrait;
 
 class UserController extends Controller
 {
+    use ResponseTrait;
+
     /**
      * @var UserRepository
      */
     private $userRepository;
-
-    /**
-     * @var string
-     */
-    private $resourceItem;
-
-    /**
-     * @var string
-     */
-    private $resourceCollection;
 
     /**
      * @var CacheRepository
@@ -42,8 +37,8 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
         $this->resourceItem = UserResource::class;
         $this->resourceCollection = UserCollection::class;
-        $this->authorizeResource(User::class);
         $this->cacheRepository = $cacheRepository;
+        $this->authorizeResource(User::class);
     }
 
     /**
@@ -83,10 +78,6 @@ class UserController extends Controller
     public function show(Request $request, User $user): UserResource
     {
         $allowedIncludes = [
-            'loginhistories',
-            'authorizeddevices',
-            'notifications',
-            'unreadnotifications',
         ];
 
         if ($request->has('include')) {
@@ -109,6 +100,9 @@ class UserController extends Controller
 
     /**
      * Update the current logged user.
+     *
+     * @param UserUpdateRequest $request
+     * @return UserResource
      */
     public function updateMe(UserUpdateRequest $request): UserResource
     {
