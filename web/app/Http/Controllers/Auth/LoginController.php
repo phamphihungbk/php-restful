@@ -103,12 +103,11 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $id = $this->guard()->id();
-        $this->guard()->user()->token()->revoke();
-        $this->guard()->user()->token()->delete();
 
         $this->cacheRepository->forget($id);
         $this->cacheRepository->tags('users:' . $id)->flush();
 
+        $this->guard()->user()->token()->revoke();
         $this->guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

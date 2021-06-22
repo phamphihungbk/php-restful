@@ -34,9 +34,9 @@ class UserController extends Controller
      */
     public function __construct(UserRepository $userRepository, CacheRepository $cacheRepository)
     {
-        $this->userRepository = $userRepository;
         $this->resourceItem = UserResource::class;
         $this->resourceCollection = UserCollection::class;
+        $this->userRepository = $userRepository;
         $this->cacheRepository = $cacheRepository;
         $this->authorizeResource(User::class);
     }
@@ -77,8 +77,7 @@ class UserController extends Controller
      */
     public function show(Request $request, User $user): UserResource
     {
-        $allowedIncludes = [
-        ];
+        $allowedIncludes = [];
 
         if ($request->has('include')) {
             $with = array_intersect($allowedIncludes, explode(',', strtolower($request->get('include'))));

@@ -24,7 +24,6 @@ class UserEloquentRepository extends AbstractEloquentRepository implements UserR
         'email',
         'facebook',
         'twitter',
-        'email_verified_at',
         'created_at',
         'updated_at',
     ];
