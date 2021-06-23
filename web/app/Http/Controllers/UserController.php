@@ -10,12 +10,9 @@ use TinnyApi\Requests\PasswordUpdateRequest;
 use TinnyApi\Requests\UserUpdateRequest;
 use TinnyApi\Resources\UserCollection;
 use TinnyApi\Resources\UserResource;
-use TinnyApi\Traits\ResponseTrait;
 
 class UserController extends Controller
 {
-    use ResponseTrait;
-
     /**
      * @var UserRepository
      */
