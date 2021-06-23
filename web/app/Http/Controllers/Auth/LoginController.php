@@ -107,6 +107,7 @@ class LoginController extends Controller
         $this->cacheRepository->forget($id);
         $this->cacheRepository->tags('users:' . $id)->flush();
 
+        $this->guard()->user()->token()->revoke();
         $this->guard()->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

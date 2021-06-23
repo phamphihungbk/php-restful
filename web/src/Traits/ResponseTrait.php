@@ -2,6 +2,7 @@
 
 namespace TinnyApi\Traits;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
@@ -56,6 +57,19 @@ trait ResponseTrait
     protected function respondWithItem(Model $item)
     {
         return (new $this->resourceItem($item))->additional(
+            ['meta' => ['timestamp' => $this->getTimestampInMilliseconds()]]
+        );
+    }
+
+    /**
+     * Return collection response from the application
+     *
+     * @param LengthAwarePaginator $collection
+     * @return mixed
+     */
+    protected function respondWithCollection(LengthAwarePaginator $collection)
+    {
+        return (new $this->resourceCollection($collection))->additional(
             ['meta' => ['timestamp' => $this->getTimestampInMilliseconds()]]
         );
     }

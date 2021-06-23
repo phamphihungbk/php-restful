@@ -15,11 +15,10 @@ use Ramsey\Uuid\Uuid;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Rules\WeakPasswordRule;
-use TinnyApi\Traits\ResponseTrait;
 
 class RegisterController extends Controller
 {
-    use ResponseTrait, RedirectsUsers, RegistersUsers;
+    use RedirectsUsers, RegistersUsers;
 
     /**
      * @var UserRepository

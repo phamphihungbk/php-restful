@@ -6,8 +6,11 @@ use Illuminate\Support\ServiceProvider;
 use TinnyApi\Contracts\UserRepository;
 use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection;
 use TinnyApi\DBConnection\SQLiteConnectionFactory as SQLiteConnection;
-use TinnyApi\Repositories\UserEloquentRepository;
 use TinnyApi\Models\UserModel;
+use TinnyApi\Repositories\UserEloquentRepository;
+use TinnyApi\Requests\PasswordUpdateRequest;
+use TinnyApi\Requests\UserUpdateRequest;
+use TinnyApi\Rules\CurrentPasswordRule;
 use TinnyApi\Rules\WeakPasswordRule;
 
 class AppServiceProvider extends ServiceProvider
@@ -38,6 +41,18 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton(WeakPasswordRule::class, function ($app) {
             return new WeakPasswordRule($app['cache.store']);
+        });
+
+        $this->app->singleton(CurrentPasswordRule::class, function ($app) {
+            return new CurrentPasswordRule($app['hash'], $app['auth']->viaRequest());
+        });
+
+        $this->app->singleton(PasswordUpdateRequest::class, function ($app) {
+            return new PasswordUpdateRequest($app[CurrentPasswordRule::class], $app[WeakPasswordRule::class]);
+        });
+
+        $this->app->singleton(UserUpdateRequest::class, function () {
+            return new UserUpdateRequest();
         });
     }
 
