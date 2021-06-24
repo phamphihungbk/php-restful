@@ -2,7 +2,7 @@
 
 namespace TinnyApi\Rules;
 
-use Illuminate\Auth\RequestGuard;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Hashing\HashManager;
@@ -23,9 +23,9 @@ class CurrentPasswordRule implements Rule
      * CurrentPasswordRule constructor.
      *
      * @param HashManager $hashManager
-     * @param StatefulGuard $auth
+     * @param Guard $auth
      */
-    public function __construct(HashManager $hashManager, StatefulGuard $auth)
+    public function __construct(HashManager $hashManager, Guard $auth)
     {
         $this->hashManager = $hashManager;
         $this->auth = $auth;
@@ -35,7 +35,7 @@ class CurrentPasswordRule implements Rule
      * Determine if the validation rule passes.
      *
      * @param string $attribute
-     * @param mixed  $value
+     * @param mixed $value
      * @return bool
      */
     public function passes($attribute, $value): bool

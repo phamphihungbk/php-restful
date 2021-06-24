@@ -44,11 +44,15 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(CurrentPasswordRule::class, function ($app) {
-            return new CurrentPasswordRule($app['hash'], $app['auth']->viaRequest());
+            return new CurrentPasswordRule($app['hash'], $app['auth.driver']);
         });
 
         $this->app->singleton(PasswordUpdateRequest::class, function ($app) {
-            return new PasswordUpdateRequest($app[CurrentPasswordRule::class], $app[WeakPasswordRule::class]);
+            $passwordUpdateRequest = new PasswordUpdateRequest();
+            $passwordUpdateRequest->setCurrentPasswordRuleInstance($app[CurrentPasswordRule::class]);
+            $passwordUpdateRequest->setWeakPasswordRuleInstance($app[WeakPasswordRule::class]);
+
+            return $passwordUpdateRequest;
         });
 
         $this->app->singleton(UserUpdateRequest::class, function () {
