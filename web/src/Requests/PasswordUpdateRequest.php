@@ -18,35 +18,6 @@ class PasswordUpdateRequest extends FormRequest
     private $weakPasswordRule;
 
     /**
-     * PasswordUpdateRequest constructor.
-     *
-     * @param CurrentPasswordRule $currentPasswordRule
-     * @param WeakPasswordRule $weakPasswordRule
-     * @param array $query
-     * @param array $request
-     * @param array $attributes
-     * @param array $cookies
-     * @param array $files
-     * @param array $server
-     * @param null $content
-     */
-    public function __construct(
-        CurrentPasswordRule $currentPasswordRule,
-        WeakPasswordRule $weakPasswordRule,
-        array $query = [],
-        array $request = [],
-        array $attributes = [],
-        array $cookies = [],
-        array $files = [],
-        array $server = [],
-        $content = null
-    ) {
-        parent::__construct($query, $request, $attributes, $cookies, $files, $server, $content);
-        $this->currentPasswordRule = $currentPasswordRule;
-        $this->weakPasswordRule = $weakPasswordRule;
-    }
-
-    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
@@ -76,5 +47,27 @@ class PasswordUpdateRequest extends FormRequest
                 $this->weakPasswordRule,
             ],
         ];
+    }
+
+    /**
+     * @param $currentPasswordRule
+     * @return $this
+     */
+    public function setCurrentPasswordRuleInstance($currentPasswordRule): PasswordUpdateRequest
+    {
+        $this->currentPasswordRule = $currentPasswordRule;
+
+        return $this;
+    }
+
+    /**
+     * @param $weakPasswordRule
+     * @return $this
+     */
+    public function setWeakPasswordRuleInstance($weakPasswordRule): PasswordUpdateRequest
+    {
+        $this->weakPasswordRule = $weakPasswordRule;
+
+        return $this;
     }
 }
