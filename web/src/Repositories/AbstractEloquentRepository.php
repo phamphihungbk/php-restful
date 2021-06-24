@@ -2,12 +2,14 @@
 
 namespace TinnyApi\Repositories;
 
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Cache\Repository as CacheRepository;
 use Ramsey\Uuid\Uuid;
 use TinnyApi\Contracts\BaseRepository;
+use Illuminate\Contracts\Events\Dispatcher as Event;
 
 abstract class AbstractEloquentRepository implements BaseRepository
 {
@@ -29,18 +31,32 @@ abstract class AbstractEloquentRepository implements BaseRepository
     /**
      * @var CacheRepository
      */
-    private $cacheRepository;
+    protected $cacheRepository;
+
+    /**
+     * @var Guard
+     */
+    protected $auth;
+
+    /**
+     * @var Event
+     */
+    protected $event;
 
     /**
      * EloquentRepository constructor.
      *
      * @param Model $model
      * @param CacheRepository $cacheRepository
+     * @param Guard $auth
+     * @param Event $event
      */
-    public function __construct(Model $model, CacheRepository $cacheRepository)
+    public function __construct(Model $model, CacheRepository $cacheRepository, Guard $auth, Event $event)
     {
         $this->model = $model;
         $this->cacheRepository = $cacheRepository;
+        $this->auth = $auth;
+        $this->event = $event;
     }
 
     /**
@@ -70,7 +86,7 @@ abstract class AbstractEloquentRepository implements BaseRepository
             throw (new ModelNotFoundException())->setModel(get_class($this->model));
         }
 
-        if (!empty($this->with) || auth()->check()) {
+        if (!empty($this->with) || $this->auth->check()) {
             return $this->findOneBy(['id' => $id]);
         }
 

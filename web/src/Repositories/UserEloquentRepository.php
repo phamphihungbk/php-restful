@@ -57,7 +57,7 @@ class UserEloquentRepository extends AbstractEloquentRepository implements UserR
         if (isset($data['password'])) {
             $data['password'] = bcrypt($data['password']);
 
-            event(new PasswordReset(auth()->user()));
+            $this->event->dispatch(new PasswordReset($this->auth->user()));
         }
 
         return parent::update($model, $data);

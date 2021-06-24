@@ -36,7 +36,12 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(UserRepository::class, function ($app) {
-            return new UserEloquentRepository(new UserModel(), $app['cache.store']);
+            return new UserEloquentRepository(
+                new UserModel(),
+                $app['cache.store'],
+                $app['auth.driver'],
+                $app['events']
+            );
         });
 
         $this->app->singleton(WeakPasswordRule::class, function ($app) {
