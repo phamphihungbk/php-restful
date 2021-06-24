@@ -108,16 +108,9 @@ class LoginController extends Controller
         $this->cacheRepository->tags('users:' . $id)->flush();
 
         $this->guard()->user()->token()->revoke();
-        $this->guard()->logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $request->session()->regenerate();
 
-        if ($response = $this->loggedOut($request)) {
-            return $response;
-        }
-
-        return $request->wantsJson()
-            ? new JsonResponse([], 204)
-            : redirect('/');
+        return $request->wantsJson() ? $this->respondWithNoContent() : redirect('/');
     }
 }

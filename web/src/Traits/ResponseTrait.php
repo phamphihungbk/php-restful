@@ -23,7 +23,10 @@ trait ResponseTrait
     {
         return new JsonResponse([
             'data' => $data,
-            'meta' => ['timestamp' => $this->getTimestampInMilliseconds()],
+            'meta' => [
+                'status' => Response::$statusTexts[$status],
+                'timestamp' => $this->getTimestampInMilliseconds()
+            ],
         ], $status);
     }
 
@@ -44,7 +47,10 @@ trait ResponseTrait
     {
         return new JsonResponse([
             'data' => null,
-            'meta' => ['timestamp' => $this->getTimestampInMilliseconds()],
+            'meta' => [
+                'status' => Response::$statusTexts[Response::HTTP_NO_CONTENT],
+                'timestamp' => $this->getTimestampInMilliseconds(),
+            ],
         ], Response::HTTP_NO_CONTENT);
     }
 
@@ -57,7 +63,12 @@ trait ResponseTrait
     protected function respondWithItem(Model $item)
     {
         return (new $this->resourceItem($item))->additional(
-            ['meta' => ['timestamp' => $this->getTimestampInMilliseconds()]]
+            [
+                'meta' => [
+                    'status' => Response::$statusTexts[Response::HTTP_OK],
+                    'timestamp' => $this->getTimestampInMilliseconds()
+                ]
+            ]
         );
     }
 
@@ -70,7 +81,11 @@ trait ResponseTrait
     protected function respondWithCollection(LengthAwarePaginator $collection)
     {
         return (new $this->resourceCollection($collection))->additional(
-            ['meta' => ['timestamp' => $this->getTimestampInMilliseconds()]]
+            [
+                'meta' => [
+                    'status' => Response::$statusTexts[Response::HTTP_OK],
+                    'timestamp' => $this->getTimestampInMilliseconds()]
+            ]
         );
     }
 }
