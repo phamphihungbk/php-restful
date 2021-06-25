@@ -7,6 +7,7 @@ use TinnyApi\Contracts\UserRepository;
 use TinnyApi\DBConnection\MySQLConnectionFactory as MysqlConnection;
 use TinnyApi\DBConnection\SQLiteConnectionFactory as SQLiteConnection;
 use TinnyApi\Models\UserModel;
+use TinnyApi\Notifications\VerifyEmailNotification;
 use TinnyApi\Repositories\UserEloquentRepository;
 use TinnyApi\Requests\PasswordUpdateRequest;
 use TinnyApi\Requests\UserUpdateRequest;
@@ -53,15 +54,18 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(PasswordUpdateRequest::class, function ($app) {
-            $passwordUpdateRequest = new PasswordUpdateRequest();
-            $passwordUpdateRequest->setCurrentPasswordRuleInstance($app[CurrentPasswordRule::class]);
-            $passwordUpdateRequest->setWeakPasswordRuleInstance($app[WeakPasswordRule::class]);
-
-            return $passwordUpdateRequest;
+            return tap(new PasswordUpdateRequest(), function ($passwordUpdateRequest) use ($app) {
+                $passwordUpdateRequest->setCurrentPasswordRuleInstance($app[CurrentPasswordRule::class]);
+                $passwordUpdateRequest->setWeakPasswordRuleInstance($app[WeakPasswordRule::class]);
+            });
         });
 
         $this->app->singleton(UserUpdateRequest::class, function () {
             return new UserUpdateRequest();
+        });
+
+        $this->app->singleton(VerifyEmailNotification::class, function ($app) {
+            return new VerifyEmailNotification($app['config']);
         });
     }
 

@@ -12,7 +12,9 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Notification;
 use TinnyApi\Models\UserModel;
+use TinnyApi\Notifications\VerifyEmailNotification;
 use TinnyApi\Traits\ResponseTrait;
 
 class LoginController extends Controller
@@ -25,14 +27,21 @@ class LoginController extends Controller
     private $cacheRepository;
 
     /**
+     * @var VerifyEmailNotification
+     */
+    private $verifyEmailNotification;
+
+    /**
      * Create a new controller instance.
      *
      * @param CacheRepository $cacheRepository
+     * @param VerifyEmailNotification $verifyEmailNotification
      */
-    public function __construct(CacheRepository $cacheRepository)
+    public function __construct(CacheRepository $cacheRepository, VerifyEmailNotification $verifyEmailNotification)
     {
         $this->middleware('guest')->except('logout');
         $this->cacheRepository = $cacheRepository;
+        $this->verifyEmailNotification = $verifyEmailNotification;
     }
 
     /**
@@ -55,6 +64,7 @@ class LoginController extends Controller
 
         try {
             $this->checkUserIfIsActive($user, $request);
+            $this->checkIfUserHasVerifiedEmail($user, $request);
         } catch (LockedException $exception) {
             return $this->respondWithCustomData([
                 'message' => $exception->getMessage(),
@@ -112,5 +122,25 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         return $request->wantsJson() ? $this->respondWithNoContent() : redirect('/');
+    }
+
+    /**
+     * @param UserModel $user
+     * @param Request $request
+     */
+    private function checkIfUserHasVerifiedEmail(UserModel $user, Request $request)
+    {
+        if (!$user->hasVerifiedEmail()) {
+            Notification::send($user, $this->verifyEmailNotification->setToken($user->email_token_confirmation));
+
+            $this->logout($request);
+
+            $message = __(
+                'We sent a confirmation email to :email. Please follow the instructions to complete your registration.',
+                ['email' => $user->email]
+            );
+
+            throw new LockedException($message);
+        }
     }
 }
