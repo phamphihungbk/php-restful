@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
@@ -17,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'api/v1', 'middleware' => 'guest'], function () {
+    Route::post('email/verify/{token}', [EmailVerificationController::class, 'verify'])
+        ->middleware('throttle:hard')
+        ->name('api.email.verify');
     Route::post('register', [RegisterController::class, 'register'])->name('api.auth.register');
     Route::post('login', [LoginController::class, 'login'])->name('api.auth.login');
 });

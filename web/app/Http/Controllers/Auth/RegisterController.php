@@ -97,6 +97,7 @@ class RegisterController extends Controller
         return $this->userRepository->store([
             'id' => Uuid::uuid4()->toString(),
             'name' => $data['name'],
+            'email_token_confirmation'    => Uuid::uuid4()->toString(),
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'is_active' => 1,
