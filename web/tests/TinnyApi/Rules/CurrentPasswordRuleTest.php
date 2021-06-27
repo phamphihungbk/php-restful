@@ -2,6 +2,8 @@
 
 namespace Tests\TinnyApi\Rules;
 
+use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Hashing\HashManager;
 use Tests\TestCase;
 use TinnyApi\Models\UserModel;
 use TinnyApi\Rules\CurrentPasswordRule;
@@ -21,8 +23,12 @@ class CurrentPasswordRuleTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->user = UserModel::factory()->create();
-        $this->rule = new CurrentPasswordRule();
+        $this->rule = new CurrentPasswordRule(
+            $this->createMock(HashManager::class),
+            $this->createMock(Guard::class)
+        );
     }
 
     /**
@@ -30,8 +36,8 @@ class CurrentPasswordRuleTest extends TestCase
      */
     public function testWillPassBecausePasswordMatch()
     {
-        $this->be($this->user);
-        $this->assertTrue($this->rule->passes('current_password', 'secretxxx'));
+        $this->actingAs($this->user, 'api');
+        $this->assertTrue($this->rule->passes('current_password', 'test@testxxx'));
     }
 
     /**
@@ -39,7 +45,7 @@ class CurrentPasswordRuleTest extends TestCase
      */
     public function testWillNotPassBecausePasswordNotMatch()
     {
-        $this->be($this->user);
+        $this->actingAs($this->user, 'api');
         $this->assertFalse($this->rule->passes('current_password', 'skjdfksf233ksjd'));
     }
 }

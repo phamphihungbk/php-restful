@@ -3,12 +3,16 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Http\Exceptions\MaintenanceModeException;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 use TinnyApi\Traits\ResponseTrait;
 
@@ -81,6 +85,17 @@ class Handler extends ExceptionHandler
             case ValidationException::class:
                 $status = Response::HTTP_UNPROCESSABLE_ENTITY;
                 $message = $exception->getMessage();
+                break;
+
+            case NotFoundHttpException::class:
+            case ModelNotFoundException::class:
+                $status = Response::HTTP_NOT_FOUND;
+                $message = 'The requested resource was not found';
+                break;
+
+            case QueryException::class:
+                $status = Response::HTTP_BAD_REQUEST;
+                $message = 'Internal error';
                 break;
 
             default:

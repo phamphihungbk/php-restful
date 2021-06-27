@@ -19,7 +19,7 @@ class UserModelFactory extends Factory
     public function definition()
     {
         return [
-            'id' => 'test_user_id',
+            'id' => $this->faker->unique()->uuid,
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
