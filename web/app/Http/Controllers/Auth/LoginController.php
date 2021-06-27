@@ -63,13 +63,13 @@ class LoginController extends Controller
 
         $this->clearLoginAttempts($request);
 
-        $token = $user->createToken('TINNY-API Personal Access Client');
-        $expiration = Carbon::parse($token->token->expires_at)->toDateTimeString();
+        $personalToken = $user->createToken('Personal Token');
+        $user->withAccessToken($personalToken->token);
 
         return $this->respondWithCustomData([
-            'access_token' => $token->accessToken,
+            'access_token' => $personalToken->accessToken,
             'token_type' => 'Bearer',
-            'expires_at' => $expiration
+            'expires_at' => Carbon::parse($personalToken->token->expires_at)->toDateTimeString()
         ]);
     }
 
@@ -102,15 +102,13 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
-        $id = $this->guard()->id();
+        $id = $request->user()->id;
 
         $this->cacheRepository->forget($id);
         $this->cacheRepository->tags('users:' . $id)->flush();
+        $request->user()->token()->revoke();
 
-        $this->guard()->user()->token()->revoke();
-        $request->session()->invalidate();
-        $request->session()->regenerate();
-
-        return $request->wantsJson() ? $this->respondWithNoContent() : redirect('/');
+        return $request->wantsJson() ?
+            $this->respondWithCustomData(['message' => 'Logout successfully']) : redirect('/');
     }
 }

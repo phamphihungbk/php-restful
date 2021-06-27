@@ -7,6 +7,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use League\OAuth2\Server\Exception\OAuthServerException;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use TinnyApi\Traits\ResponseTrait;
@@ -57,6 +58,11 @@ class Handler extends ExceptionHandler
         $exceptionInstance = get_class($exception);
 
         switch ($exceptionInstance) {
+            case OAuthServerException::class:
+                $status = Response::HTTP_BAD_REQUEST;
+                $message = $exception->getMessage();
+                break;
+
             case AuthenticationException::class:
                 $status = Response::HTTP_UNAUTHORIZED;
                 $message = $exception->getMessage();

@@ -65,10 +65,10 @@ return [
 
         'mysql_testing' => [
             'driver' => 'mysql',
-            'host' => env('APP_NAME') === 'testing' ? env('DB_HOST') : 'localhost',
+            'host' => env('APP_NAME') === 'testing' ? env('DB_HOST') : 'mysql',
             'database' =>  env('APP_NAME') === 'testing' ? env('DB_DATABASE') : 'db_testing',
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
+            'username' => env('APP_NAME') === 'testing' ? env('DB_USERNAME') : 'api-user',
+            'password' => env('APP_NAME') === 'testing' ? env('DB_PASSWORD') : 'api-password' ,
             'charset' => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix' => '',

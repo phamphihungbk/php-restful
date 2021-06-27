@@ -2,6 +2,10 @@
 
 namespace Tests\TinnyApi\Controllers;
 
+use DateTime;
+use Illuminate\Support\Facades\DB;
+use Laravel\Passport\ClientRepository;
+use Laravel\Passport\Token;
 use Tests\TestCase;
 use TinnyApi\Models\UserModel as User;
 
@@ -14,14 +18,23 @@ class LoginControllerTest extends TestCase
 
     const HTTP_LOCKED = 423;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
+        $clientRepository = new ClientRepository();
+        $time = new DateTime;
+        $client = $clientRepository->createPersonalAccessClient(null, 'Test Personal Access Client', '/');
+        DB::table('oauth_access_tokens')->insert([
+            'client_id' => $client->id,
+            'created_at' => $time,
+            'updated_at' => $time,
+        ]);
         $this->user = User::factory()->create();
-        $this->user->createToken('Test Personal Access Client');
-        dd($this->user);
     }
 
+    /**
+     * @test
+     */
     public function testLogin()
     {
         $this->postJson(route('api.auth.login'), [
@@ -42,53 +55,41 @@ class LoginControllerTest extends TestCase
             ]);
     }
 
+    /**
+     * @test
+     */
     public function testFetchTheCurrentUser()
     {
-        $this->actingAs($this->user)
-            ->getJson(route('api.me'))
+        $accessToken = $this->postJson(route('api.auth.login'), [
+            'email' => $this->user->email,
+            'password' => 'test@testxxx',
+        ])->json()['data']['access_token'];
+
+        $this->getJson(route('api.me'), ['Authorization' => 'Bearer ' . $accessToken])
             ->assertOk()
             ->assertJsonFragment([
+                'id' => $this->user->id,
                 'email' => $this->user->email,
-                'locale' => $this->user->locale,
+                'name' => $this->user->name,
+                'facebook' => $this->user->facebook,
+                'twitter' => $this->user->twitter,
             ]);
     }
 
     /**
-     * @group logout
+     * @test
      */
     public function testLogout()
     {
-        $token = $this->postJson(route('api.auth.login'), [
+        $accessToken = $this->postJson(route('api.auth.login'), [
             'email' => $this->user->email,
-            'password' => 'secretxxx',
-        ])->json()['data']['token'];
+            'password' => 'test@testxxx',
+        ])->json()['data']['access_token'];
 
-        $this->postJson(route('api.auth.logout') . '?token=' . $token)
+        $this->postJson(route('api.auth.logout'), [], ['Authorization' => 'Bearer ' . $accessToken])
             ->assertSuccessful();
 
-        $this->getJson(route('api.me') . '?token=' . $token)
+        $this->getJson(route('api.me'), ['Authorization' => 'Bearer ' . $accessToken])
             ->assertUnauthorized();
-    }
-
-    public function testCannotLoginBecauseEmailIsNotVerified()
-    {
-        $this->user = User::factory()->emailUnverified()->create();
-
-        $this->postJson(route('api.auth.login'), [
-            'email' => $this->user->email,
-            'password' => 'secretxxx',
-        ])
-            ->assertStatus(self::HTTP_LOCKED);
-    }
-
-    public function testCannotLoginBecauseAccountIsInactive()
-    {
-        $this->user = User::factory()->inactive()->create();
-
-        $this->postJson(route('api.auth.login'), [
-            'email' => $this->user->email,
-            'password' => 'secretxxx',
-        ])
-            ->assertStatus(self::HTTP_LOCKED);
     }
 }
