@@ -1,17 +1,17 @@
-### API Project
+## PHP RESTFUL
+☘️ A REST API project was built by PHP, followed the SOLID principles and Clean Architecture.
 
-It's just a small API project built by Laravel.
+## Features
+- Authorization with Oauth2.0  
+- Prevent registration with week password 
+- Tests  
+- Login  
+- Register  
+- Uuid
+- Syslod-ng
+- API Caching with Memcached
 
-### Guidelines:
+## Guidelines:
 
-- Run `make build` to build docker image
-- Run `make up` to start all container
-
-### Folder Structure:
-
-- config: contain env file
-- environment: contain mysql, nginx, phpmyadmin and php-fpm Dockerfile
-- web: contain laravel sourcecode
-- web/src: contain all services of laravel app
-- web/routes/routes: is primary routing file
-- web/tests: contain all the tests writen by PHPUnit
+Firstly, you need to run `make up` to build and create docker instance, then let run `make db-create` to create new DB on MYSQL.
+To make the API ready you need to run migration and composer install as well. All the commands already attached in `Makefile`
