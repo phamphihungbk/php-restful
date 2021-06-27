@@ -3,7 +3,6 @@
 namespace TinnyApi\Rules;
 
 use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Hashing\HashManager;
 
@@ -15,7 +14,7 @@ class CurrentPasswordRule implements Rule
     private $hashManager;
 
     /**
-     * @var StatefulGuard
+     * @var Guard
      */
     private $auth;
 

@@ -17,8 +17,10 @@
 #
 
 CREATE DATABASE IF NOT EXISTS `tinny-db` COLLATE 'utf8_general_ci';
+CREATE DATABASE IF NOT EXISTS `db_testing` COLLATE 'utf8_general_ci';
 CREATE USER IF NOT EXISTS 'api-user' IDENTIFIED BY 'api-password';
 ALTER USER 'api-user'@'%' IDENTIFIED WITH mysql_native_password BY 'api-password';
 GRANT ALL PRIVILEGES ON `tinny-db`.* TO 'api-user'@'%';
+GRANT ALL PRIVILEGES ON `db_testing`.* TO 'api-user'@'%';
 
 FLUSH PRIVILEGES;

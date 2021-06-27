@@ -1,13 +1,13 @@
 up:
 	docker-compose -f ./environment/docker-compose.yml --env-file ./.env up --remove-orphans -d
 
-build: copy-files
+build: files-copy
 	docker-compose -f ./environment/docker-compose.yml --env-file ./.env build
 
 down:
 	docker-compose -f ./environment/docker-compose.yml down --remove-orphans
 
-create-db:
+db-create:
 	docker exec -it api-mysql sh -c "mysql -u root < /docker-entrypoint-initdb.d/createdb.sql"
 
 composer-install:
@@ -16,7 +16,7 @@ composer-install:
 composer-update:
 	docker exec -it api-php bash -c "composer update"
 
-copy-files:
+files-copy:
 	cp ./config/.env.local ./.env
 	cp ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql.example ./environment/mysql/docker-entrypoint-initdb.d/createdb.sql
 
