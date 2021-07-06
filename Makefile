@@ -34,3 +34,6 @@ config-cache:
 
 code-coverage:
 	docker exec -it api-php sh -c "composer coverage"
+
+nginx-check:
+	docker exec -it api-nginx sh -c "nginx -T"
