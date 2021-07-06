@@ -9,7 +9,7 @@
 - Login  
 - Register  
 - Uuid
-- Syslod-ng
+- Syslog-ng
 - API Caching with Memcached
 
 ## Guidelines:
