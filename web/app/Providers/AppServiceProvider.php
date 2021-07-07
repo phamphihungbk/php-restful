@@ -48,11 +48,10 @@ class AppServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(PasswordUpdateRequest::class, function ($app) {
-            $passwordUpdateRequest = new PasswordUpdateRequest();
-            $passwordUpdateRequest->setCurrentPasswordRuleInstance($app[CurrentPasswordRule::class]);
-            $passwordUpdateRequest->setWeakPasswordRuleInstance($app[WeakPasswordRule::class]);
-
-            return $passwordUpdateRequest;
+            return tap(new PasswordUpdateRequest(), function ($instance) use ($app) {
+                $instance->setCurrentPasswordRuleInstance($app[CurrentPasswordRule::class]);
+                $instance->setWeakPasswordRuleInstance($app[WeakPasswordRule::class]);
+            });
         });
 
         $this->app->singleton(UserUpdateRequest::class, function () {

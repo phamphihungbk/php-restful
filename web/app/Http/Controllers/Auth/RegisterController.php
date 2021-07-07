@@ -24,6 +24,7 @@ class RegisterController extends Controller
      * @var UserRepository
      */
     private $userRepository;
+
     /**
      * @var WeakPasswordRule
      */
@@ -82,6 +83,14 @@ class RegisterController extends Controller
                 'min:8',
                 'confirmed',
                 $this->passwordRule,
+            ],
+            'facebook' => [
+                'string',
+                'min:8'
+            ],
+            'twitter' => [
+                'string',
+                'min:8'
             ],
         ]);
     }

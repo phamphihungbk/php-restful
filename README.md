@@ -2,7 +2,7 @@
 ☘️ A REST API project was built by PHP, followed the SOLID principles and Clean Architecture.
 
 ## Features
-- Protect API with CORS
+- CORS
 - Authorization with Oauth2.0  
 - Prevent registration with week password 
 - Tests  
