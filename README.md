@@ -1,18 +1,64 @@
 ## PHP RESTFUL
-☘️ A REST API project was built by PHP, followed the SOLID principles and Clean Architecture.
+
+☘️ A REST API project was built by PHP, followed the SOLID principles and Clean
+Architecture.
 
 ## Features
-- CORS
-- Authorization with Oauth2.0  
-- Prevent registration with week password 
-- Tests  
-- Login  
-- Register  
+
+```txt
+- Protect API with CORS
+- Authorization with Laravel Passport
+- Prevent registration with week password
+- Tests
+- Login
+- Register
 - Uuid
-- Syslog-ng
+- Centralize log with Syslog-ng
 - API Caching with Memcached
+```
 
-## Guidelines:
+## Project Structure
 
-Firstly, you need to run `make up` to build and create docker instance, then let run `make db-create` to create new DB on MYSQL.
-To make the API ready you need to run migration and composer install as well. All the commands already attached in `Makefile`
+```bash
+├── config                      # contains all env file for different environments
+├── environment                 # dockerfile
+└── web                    	# main sourcecode
+```
+
+## Project setup:
+
+Add domain to your host file ( MacOS )
+
+```bash
+make host
+```
+
+Build docker image
+
+```bash
+make build
+```
+
+Start docker container
+
+```bash
+make up
+```
+
+Create DB table in Mysql
+
+```bash
+make db-create
+```
+
+Run migration on DB
+
+```bash
+make db-migrate
+```
+
+Access api by putting below domain on Postman
+
+```bash
+tinnyapi.local
+```

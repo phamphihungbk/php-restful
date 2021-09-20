@@ -37,3 +37,6 @@ code-coverage:
 
 nginx-check:
 	docker exec -it api-nginx sh -c "nginx -T"
+
+host:
+	sudo -- sh -c -e "echo '127.0.0.1 admin.tinnyapi.local\n127.0.0.1 tinnyapi.local' >> /etc/hosts"
